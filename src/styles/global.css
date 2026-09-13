@@ -212,6 +212,7 @@ header p {
 
 .card__image {
   width: 100%;
+  height: auto;
   aspect-ratio: 1;      /* every hat gets the same square frame */
   object-fit: cover;    /* fills the frame without squashing */
   border-radius: 0.25rem;

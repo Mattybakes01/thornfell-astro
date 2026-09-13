@@ -1,5 +1,12 @@
 ---
 import "../styles/global.css";
+import {Image} from 'astro:assets';
+import navLogo from '../img/logo.jpg';
+import theBoneCollector from '../img/the-bone-collector-1.jpeg';
+import theWesternRose from '../img/the-western-rose-1.jpeg';
+import theWastelandOutlaw from '../img/the-wasteland-outlaw-1.jpeg';
+import theHeartOfTheWest from '../img/the-heart-of-the-west-1.jpeg';
+import theSentinel from '../img/the-sentinel-1.jpeg';
 ---
 
 <html lang="en">
@@ -14,7 +21,7 @@ import "../styles/global.css";
 	<div class="hero">
     <nav>
         <a class="navlogolink" href="#">
-            <img src="src/img/logo.jpg" alt="Thornfell logo" />
+            <Image src={navLogo} alt="Thornfell logo"/>
         </a>
     </nav>
 
@@ -30,7 +37,8 @@ import "../styles/global.css";
         <div class="card-grid">
 
             <article class="card fade-in">
-                <img class="card__image" src="src/img/the-bone-collector-1.jpeg" alt="The Bone Collector">
+                
+                <Image src={theBoneCollector} alt="The Bone Collector" class="card__image" />
                 <div class="card__body">
                     <h3 class="card__title">THE BONE COLLECTOR</h3>
                     <p class="card__description">Built to look like it’s already lived a life.</p>
@@ -48,7 +56,7 @@ import "../styles/global.css";
             </article>
 
             <article class="card fade-in">
-                <img class="card__image" src="src/img/the-western-rose-1.jpeg" alt="The Western Rose">
+                <Image src={theWesternRose} alt="The Western Rose" class="card__image" />
                 <div class="card__body">
                     <h3 class="card__title">THE WESTERN ROSE</h3>
                     <p class="card__description">Lightly pounced to finish as a soft nappy felt, The Western Rose is shaped into a distinctive folded telescope crown — sweeping into itself with a sculptural, asymmetric line that gives the hat its character without shouting for attention.</p>
@@ -65,7 +73,7 @@ import "../styles/global.css";
             </article>
 
             <article class="card fade-in">
-                <img class="card__image" src="src/img/the-wasteland-outlaw-1.jpeg" alt="The Wasteland Outlaw">
+                <Image src={theWastelandOutlaw} alt="The Wasteland Outlaw" class="card__image" />
                 <div class="card__body">
                     <h3 class="card__title">THE WASTELAND OUTLAW</h3>
                     <p class="card__description">Sent straight from the apocalypse.</p>
@@ -83,7 +91,7 @@ import "../styles/global.css";
             </article>
 
             <article class="card fade-in">
-                <img class="card__image" src="src/img/the-heart-of-the-west-1.jpeg" alt="The Heart Of The West">
+                <Image src={theHeartOfTheWest} alt="The Heart Of The West" class="card__image" />
                 <div class="card__body">
                     <h3 class="card__title">THE HEART OF THE WEST</h3>
                     <p class="card__description">The crown sweeps inward to form the heart before meeting in a deep, deliberate fold at the front, giving the shape a focal point and a romantic, sweeping, dressy frontal aspect.</p>
@@ -100,7 +108,7 @@ import "../styles/global.css";
             </article>
 
             <article class="card fade-in">
-                <img class="card__image" src="src/img/the-sentinel-1.jpeg" alt="The Sentinel">
+                <Image src={theSentinel} alt="The Sentinel" class="card__image" />
                 <div class="card__body">
                     <h3 class="card__title">THE SENTINEL</h3>
                     <p class="card__description">The Sentinel doesn’t look weathered for effect. It looks like it’s already lived a life.</p>

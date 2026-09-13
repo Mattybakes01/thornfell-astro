@@ -1,0 +1,423 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap');
+
+/* =========================================================
+   1. Design tokens
+   Variables for colours and spacing so every rule below pulls
+   from the same small set of values instead of magic numbers.
+   ========================================================= */
+:root {
+  /* Colours */
+  --bg: #040404;          /* page background */
+  --gold-light: #d2c19e;  /* headings, nav, primary text */
+  --gold-dark: #928169;   /* secondary / muted text */
+
+  /* Spacing scale (multiples of 4px, expressed in rem).
+     Only use these for margin, padding and gap. */
+  --space-1: 0.25rem;  /*  4px */
+  --space-2: 0.5rem;   /*  8px */
+  --space-3: 0.75rem;  /* 12px */
+  --space-4: 1rem;     /* 16px */
+  --space-6: 1.5rem;   /* 24px */
+  --space-8: 2rem;     /* 32px */
+  --space-10: 2.5rem;  /* 40px */
+  --space-16: 4rem;    /* 64px */
+
+  /* Fonts */
+  --font-display: 'Cinzel', serif;  /* headings and nav */
+  --font-body: Georgia, serif;      /* paragraphs - Georgia is a safe, readable serif */
+}
+
+/* =========================================================
+   2. Base / reset
+   Sensible defaults for every element. Kept minimal.
+   ========================================================= */
+*, *::before, *::after {
+  box-sizing: border-box;   /* padding counts inside width, not on top of it */
+}
+
+html {
+  font-size: 100%;          /* 16px by default, respects user browser settings */
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.6;         /* serif body text reads better with a touch more leading than 1.5 */
+  color: var(--gold-light);
+}
+
+img {
+  max-width: 100%;          /* images never overflow their container */
+  display: block;           /* removes the small gap under inline images */
+}
+
+/* Headings share a font and colour. No text-align here on purpose:
+   left is the browser default, and we only centre where we choose to. */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  color: var(--gold-light);
+  line-height: 1.2;         /* tighter than body text so big headings don't look airy */
+  margin: 0 0 var(--space-2);
+}
+
+h1 { font-size: 4rem; }
+h2 { font-size: 2.5rem; }
+h3 { font-size: 1.5rem; }
+h4 { font-size: 1.25rem; }
+
+p {
+  margin: 0 0 var(--space-4);   /* bottom margin only, so gaps between elements are predictable */
+  max-width: 65ch;              /* keeps line length readable */
+}
+
+/* Links inherit the gold colour and lose the underline.
+   One rule covers every state, so no need to list :link/:visited/:hover/:active separately. */
+a {
+  color: var(--gold-light);
+  text-decoration: none;
+}
+
+/* =========================================================
+   3. Utility / text styles
+   Reusable classes for one-off text treatments.
+   ========================================================= */
+.dark-upper-case-text {
+  color: var(--gold-dark);
+  font-size: 1.1rem;
+}
+
+.light-italic-serif-text {
+  color: var(--gold-light);
+  font-style: italic;
+  font-size: 1.15rem;
+}
+
+/* Generic centred wrapper for page sections. Reuse this on any
+   section that should sit in the middle with a max width.
+   (Not used yet - the collection and footer set their own widths.) */
+.container {
+  max-width: 76rem;
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+}
+
+/* =========================================================
+   4. Navigation
+   ========================================================= */
+nav {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  background-color: var(--bg);
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: var(--gold-light);
+  text-align: center;
+
+  /* Fade in on load */
+  opacity: 0;
+  animation: fadeIn 1.2s ease-in 0.2s forwards;
+}
+
+nav a {
+  display: flex;
+  flex-direction: column;
+}
+
+nav img {
+  height: 10rem;
+  width: auto;
+}
+
+/* =========================================================
+   5. Header / hero
+   ========================================================= */
+/* Nav + header together fill the first screen, so the collection
+   only appears once the user scrolls. */
+.hero {
+  min-height: 100svh;      /* svh = "small viewport height", correct on mobile where the browser bar shrinks */
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  flex: 1;                 /* takes all the height the nav doesn't use */
+
+  /* Three layers, top to bottom: flat dark tint, radial vignette, photo */
+  background-image:
+    linear-gradient(hsla(0, 0%, 2%, 0.7), rgba(4, 4, 4, 0.874)),
+    radial-gradient(ellipse at center, transparent 10%, var(--bg) 100%),
+    url(/src/img/header-img.jpg);
+  background-size: cover;               /* fills the box, crops the overflow */
+  background-position: center top left; /* which part survives the crop on mobile */
+  background-repeat: no-repeat;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: var(--space-8) var(--space-6);
+  text-align: center;                   /* hero copy is short, so centred is fine here */
+
+  /* Fade in slightly after the nav */
+  opacity: 0;
+animation: fadeIn 1.2s ease-out 0.6s forwards;
+  /*              ^duration    ^delay */
+}
+
+header h1 {
+  margin: var(--space-8) 0;
+}
+
+header p {
+  margin-left: auto;    /* centres the 65ch-wide paragraph inside the header */
+  margin-right: auto;
+}
+
+/* =========================================================
+   6. Collection (product cards)
+   ========================================================= */
+.collection {
+  max-width: 76rem;
+  margin: 0 auto;                            /* centres the section */
+  padding: var(--space-16) var(--space-6);   /* generous vertical space, breathing room on mobile */
+}
+
+.collection h2 {
+  font-size: 2rem;
+  text-align: center;                        /* the section title is the one thing we centre here */
+  margin-bottom: var(--space-10);
+}
+
+/* Flexbox row that wraps. Cards start at 16rem and grow to fill,
+   justify-content centres a lone card on narrow screens and a partial last row on wide ones. */
+.card-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-8);
+}
+
+.card {
+  flex: 1 1 16rem;      /* grow, shrink, start at 16rem */
+  max-width: 20rem;     /* stops last-row cards stretching */
+  display: flex;
+  flex-direction: column;
+}
+
+.card__image {
+  width: 100%;
+  aspect-ratio: 1;      /* every hat gets the same square frame */
+  object-fit: cover;    /* fills the frame without squashing */
+  border-radius: 0.25rem;
+}
+
+.card__body {
+  padding: var(--space-3) 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);  /* space between title, teaser, and toggle */
+}
+
+.card__title {
+  font-size: 1.125rem;
+  margin: 0;
+  text-align: left;     /* explicit, in case a centred rule sneaks in later */
+}
+
+.card__description {
+  font-size: 0.9375rem; /* 15px - a touch smaller than body, still readable */
+  line-height: 1.6;
+  color: var(--gold-dark);
+  margin: 0;            /* the body's gap handles spacing */
+  max-width: none;      /* the card already limits width, so drop the 65ch rule */
+  text-align: left;
+}
+
+/* --- Read more / Read less ---
+   The outer div is a grid whose single row animates from 0fr (collapsed)
+   to 1fr (full content height). The inner div clips the text while it moves. */
+.card__more {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s ease;
+}
+
+.card__more-inner {
+  overflow: hidden;
+}
+
+.card__more.is-open {
+  grid-template-rows: 1fr;
+}
+
+/* Space between the hidden paragraphs */
+.card__more-inner p + p {
+  margin-top: var(--space-3);
+}
+
+/* The toggle, styled as a small underlined text link rather than a button */
+.card__toggle {
+  align-self: flex-start;
+  padding: 0 0 0.125rem;
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--gold-dark);
+  color: var(--gold-light);
+  font-family: var(--font-display);
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.card__toggle:hover,
+.card__toggle:focus-visible {
+  border-bottom-color: var(--gold-light);
+  outline: none;
+}
+
+/* =========================================================
+   7. Footer / contact
+   ========================================================= */
+.footer {
+  border-top: 1px solid var(--gold-dark);   /* thin rule separates it from the collection */
+  padding: var(--space-16) var(--space-6) var(--space-8);
+}
+
+/* Two columns on desktop, stacked on mobile. Same wrap trick as the cards. */
+.footer__inner {
+  max-width: 76rem;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-10);
+}
+
+.footer__intro {
+  flex: 1 1 18rem;
+}
+
+.footer__title {
+  font-size: 2rem;
+  margin-bottom: var(--space-4);
+}
+
+.footer__intro p {
+  color: var(--gold-dark);
+}
+
+.contact-form {
+  flex: 1 1 22rem;
+  max-width: 32rem;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* Label sits above its input */
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.form-field label {
+  font-family: var(--font-display);
+  font-size: 0.875rem;
+  color: var(--gold-light);
+}
+
+/* Inputs: transparent with a bottom border only, which suits the dark, understated look */
+.form-field input,
+.form-field textarea {
+  width: 100%;
+  padding: var(--space-3) var(--space-2);
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--gold-dark);
+  color: var(--gold-light);
+  font-family: var(--font-body);
+  font-size: 1rem;
+}
+
+.form-field textarea {
+  resize: vertical;       /* user can make it taller, not wider */
+}
+
+/* Visible focus state, both for keyboard users and because it looks good */
+.form-field input:focus,
+.form-field textarea:focus {
+  outline: none;
+  border-bottom-color: var(--gold-light);
+}
+
+.button {
+  align-self: flex-start;   /* don't stretch to full width */
+  padding: var(--space-3) var(--space-6);
+  background: transparent;
+  border: 1px solid var(--gold-light);
+  color: var(--gold-light);
+  font-family: var(--font-display);
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.button:hover,
+.button:focus-visible {
+  background: var(--gold-light);
+  color: var(--bg);
+}
+
+.footer__legal {
+  max-width: 76rem;
+  margin: var(--space-10) auto 0;
+  font-size: 0.875rem;
+  color: var(--gold-dark);
+}
+
+/* =========================================================
+   8. Animations
+   ========================================================= */
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+/* Scroll-triggered fade for sections further down the page.
+   Starts invisible; app.js adds .is-visible when the element enters the viewport. */
+.fade-in {
+  opacity: 0;
+  transition: opacity 1.2s ease-out;
+}
+
+.fade-in.is-visible {
+  opacity: 1;
+}
+
+/* Respect users who have asked for less motion */
+@media (prefers-reduced-motion: reduce) {
+  nav, header {
+    animation: none;
+    opacity: 1;
+  }
+  .card__more {
+    transition: none;
+  }
+  .fade-in {
+    opacity: 1;
+    transition: none;
+  }
+}
+
+/* =========================================================
+   9. Responsive tweaks
+   Mobile styles are the default above; this adds changes for wider screens.
+   ========================================================= */
+@media (min-width: 720px) {
+  header {
+    background-position: center top;   /* show more of the photo when there's room */
+  }
+}

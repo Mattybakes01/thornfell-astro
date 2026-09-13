@@ -1,5 +1,5 @@
 ---
-
+import "../styles/global.css";
 ---
 
 <html lang="en">
@@ -8,10 +8,148 @@
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
+		<title>Thornfell – Handcrafted Headwear</title>
+		<script src="/src/js/app.js" defer></script>
 	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+	<div class="hero">
+    <nav>
+        <a class="navlogolink" href="#">
+            <img src="/src/img/logo.jpg" alt="Thornfell logo" />
+        </a>
+    </nav>
+
+    <header>
+        <p class="dark-upper-case-text">Handcrafted Headwear</p>
+        <h1>THORNFELL</h1>
+        <p class="light-italic-serif-text">Each hat forged by hand. Each thorn pressed in iron. A quiet signature, carried in shadow.</p>
+    </header>
+    </div>
+
+    <section class="collection">
+        <h2>The Collection</h2>
+        <div class="card-grid">
+
+            <article class="card fade-in">
+                <img class="card__image" src="/src/img/the-bone-collector-1.jpeg" alt="The Bone Collector">
+                <div class="card__body">
+                    <h3 class="card__title">THE BONE COLLECTOR</h3>
+                    <p class="card__description">Built to look like it’s already lived a life.</p>
+
+                    <div class="card__more">
+                        <div class="card__more-inner">
+                            <p class="card__description">A 3.5-inch brim frames a hand-shaped crown, dominated by a Punisher-inspired skull worked directly into the felt — sculpted, scarred and weathered until it feels less like decoration and more like something unearthed.</p>
+                            <p class="card__description">The band is cut from genuine crocodile hornback, backed onto hand-distressed black petersham and bound with rusted barbed wire. Raw textures, battered edges and deliberate imperfections run throughout the piece, with every element aged together so nothing looks newly added or out of place.</p>
+                            <p class="card__description">The result is dark, brutal and unmistakably Thornfell.</p>
+                        </div>
+                    </div>
+
+                    <button class="card__toggle" type="button" aria-expanded="false">Read more</button>
+                </div>
+            </article>
+
+            <article class="card fade-in">
+                <img class="card__image" src="/src/img/the-western-rose-1.jpeg" alt="The Western Rose">
+                <div class="card__body">
+                    <h3 class="card__title">THE WESTERN ROSE</h3>
+                    <p class="card__description">Lightly pounced to finish as a soft nappy felt, The Western Rose is shaped into a distinctive folded telescope crown — sweeping into itself with a sculptural, asymmetric line that gives the hat its character without shouting for attention.</p>
+
+                    <div class="card__more">
+                        <div class="card__more-inner">
+                            <p class="card__description">The finish is deliberately restrained. An understated braided leather band wraps the crown, adding just enough warmth and texture against the pale felt while allowing the shape and finish to do the talking.</p>
+                            <p class="card__description">Clean, tactile and quietly unconventional. It’s understated enough to wear anywhere, but distinct enough to know it’s not an off-the-shelf hat.</p>
+                        </div>
+                    </div>
+
+                    <button class="card__toggle" type="button" aria-expanded="false">Read more</button>
+                </div>
+            </article>
+
+            <article class="card fade-in">
+                <img class="card__image" src="src/img/the-wasteland-outlaw-1.jpeg" alt="The Wasteland Outlaw">
+                <div class="card__body">
+                    <h3 class="card__title">THE WASTELAND OUTLAW</h3>
+                    <p class="card__description">Sent straight from the apocalypse.</p>
+
+                    <div class="card__more">
+                        <div class="card__more-inner">
+                            <p class="card__description">The Wasteland Outlaw is built to look survived, not manufactured. The crown is brutally sculpted with a distinct skull worked into the felt, then scarred, distressed and weathered by hand. Uneven lines, battered surfaces and deep patina give the entire piece the character of something that’s been dragged through hell and come out wearing the scars.</p>
+                            <p class="card__description">Around the crown sits a band of genuine vintage Burmese python, its naturally aged scales backed onto weathered jute intertwined with barbed wire — raw, primitive textures layered together without anything feeling polished or precious. Heavy asymmetry and deliberate imperfection continue through the crown and brim, giving every angle a different character.</p>
+                            <p class="card__description">It isn’t made to look old.<br>It’s made to look like it survived the end of the world.</p>
+                        </div>
+                    </div>
+
+                    <button class="card__toggle" type="button" aria-expanded="false">Read more</button>
+                </div>
+            </article>
+
+            <article class="card fade-in">
+                <img class="card__image" src="src/img/the-heart-of-the-west-1.jpeg" alt="The Heart Of The West">
+                <div class="card__body">
+                    <h3 class="card__title">THE HEART OF THE WEST</h3>
+                    <p class="card__description">The crown sweeps inward to form the heart before meeting in a deep, deliberate fold at the front, giving the shape a focal point and a romantic, sweeping, dressy frontal aspect.</p>
+
+                    <div class="card__more">
+                        <div class="card__more-inner">
+                            <p class="card__description">Lightly pounced to retain a soft, tactile nap, the brim is finished with a gentle pencil curl, lifting subtly at the sides before pulling down over the eyes for a strong, flattering silhouette.</p>
+                            <p class="card__description">An understated braided leather band wraps the crown, finished with a Winchester bullet casing — a small hit of grit against the softness of the felt.</p>
+                        </div>
+                    </div>
+
+                    <button class="card__toggle" type="button" aria-expanded="false">Read more</button>
+                </div>
+            </article>
+
+            <article class="card fade-in">
+                <img class="card__image" src="/src/img/the-sentinel-1.jpeg" alt="The Sentinel">
+                <div class="card__body">
+                    <h3 class="card__title">THE SENTINEL</h3>
+                    <p class="card__description">The Sentinel doesn’t look weathered for effect. It looks like it’s already lived a life.</p>
+
+                    <div class="card__more">
+                        <div class="card__more-inner">
+                            <p class="card__description">Worn, beaten and deliberately imperfect, its defining feature is a squashed, asymmetric crown, pushed off-centre as though years spent on the head of an old gunslinger have slowly knocked it out of shape. Nothing sits quite straight — and it was never meant to.</p>
+                            <p class="card__description">The crown is wrapped in genuine vintage Burmese python, layered beneath a hand-distressed leather band and a run of individually hand-patina’d gunmetal conchos. Front and centre sits a skull — the unmistakable face of The Sentinel.</p>
+                            <p class="card__description">Tucked into the band, almost hidden amongst the battered python, is an old rusted razor blade — a detail you might not notice at first glance, but one that tells you everything you need to know about the hat.</p>
+                            <p class="card__description">Finished with a broad 4" gently pencil-curled brim, pulled down hard over the eyes for a menacing silhouette.</p>
+                            <p class="card__description">Built to look like it was found on the body of an old outlaw cowboy.</p>
+                        </div>
+                    </div>
+
+                    <button class="card__toggle" type="button" aria-expanded="false">Read more</button>
+                </div>
+            </article>
+
+        </div>
+    </section>
+
+    <footer class="footer fade-in">
+        <div class="footer__inner">
+            <div class="footer__intro">
+                <h2 class="footer__title">Get in touch</h2>
+                <p>Every hat is made to order. Tell me what you have in mind and I'll get back to you within a few days.</p>
+            </div>
+
+            <form class="contact-form">
+                <div class="form-field">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" autocomplete="name">
+                </div>
+
+                <div class="form-field">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" autocomplete="email">
+                </div>
+
+                <div class="form-field">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="5"></textarea>
+                </div>
+
+                <button type="submit" class="button">Send message</button>
+            </form>
+        </div>
+
+        <p class="footer__legal">&copy; 2026 Thornfell Hats</p>
+    </footer>
+
 </html>

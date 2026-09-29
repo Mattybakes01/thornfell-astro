@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import Navigation from '../components/Navigation.astro';
+import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 ---
 
@@ -12,17 +13,9 @@ import Footer from '../components/Footer.astro';
 		<meta name="viewport" content="width=device-width" />
 		<title>Thornfell – Handcrafted Headwear</title>
 		<script>import '../js/app.js';</script>
-	</head>
-	<div class="hero">
+	</head>	
     <Navigation />
-
-    <header>
-        <p class="dark-upper-case-text">Handcrafted Headwear</p>
-        <h1>THORNFELL</h1>
-        <p class="light-italic-serif-text">Each hat forged by hand. Each thorn pressed in iron. A quiet signature, carried in shadow.</p>
-    </header>
-    </div>
+    <Header />   
     <slot />
     <Footer />  
-
 </html>

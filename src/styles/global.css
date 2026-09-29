@@ -146,6 +146,7 @@ nav img {
 }
 
 header {
+  min-height: 80svh;
   flex: 1;                 /* takes all the height the nav doesn't use */
 
   /* Three layers, top to bottom: flat dark tint, radial vignette, photo */

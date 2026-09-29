@@ -1,0 +1,28 @@
+---
+import "../styles/global.css";
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="viewport" content="width=device-width" />
+		<title>Thornfell – Handcrafted Headwear</title>
+		<script>import '../js/app.js';</script>
+	</head>
+	<div class="hero">
+    <Navigation />
+
+    <header>
+        <p class="dark-upper-case-text">Handcrafted Headwear</p>
+        <h1>THORNFELL</h1>
+        <p class="light-italic-serif-text">Each hat forged by hand. Each thorn pressed in iron. A quiet signature, carried in shadow.</p>
+    </header>
+    </div>
+    <slot />
+    <Footer />  
+
+</html>

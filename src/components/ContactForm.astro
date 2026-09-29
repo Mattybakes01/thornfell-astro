@@ -1,0 +1,32 @@
+---
+---
+<div class="contactform_container">
+    <div class="contactform_intro">
+        <h2 class="contactform_title">Get in touch</h2>
+        <p>Every hat is made to order. Tell me what you have in mind and I'll get back to you within a few days.</p>
+    </div>
+
+    <form class="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="contact" />
+        <p class="hidden" style="display:none">
+            <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+        </p>
+
+        <div class="form-field">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" autocomplete="name">
+        </div>
+
+        <div class="form-field">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" autocomplete="email">
+        </div>
+
+        <div class="form-field">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5"></textarea>
+        </div>
+
+        <button type="submit" class="button">Send message</button>
+    </form>
+</div>

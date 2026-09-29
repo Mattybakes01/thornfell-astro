@@ -179,6 +179,24 @@ header p {
   margin-right: auto;
 }
 
+
+.about {
+  max-width: 76rem;
+  margin: 0 auto;                            /* centres the section */
+  padding: var(--space-16) var(--space-6);   /* generous vertical space, breathing room on mobile */
+}
+
+.about h2 {
+  font-size: 2rem;
+  text-align: center;                        /* the section title is the one thing we centre here */
+  margin-bottom: var(--space-10);
+}
+
+.about p {
+  text-align: center;   
+  margin-left: auto;    /* centres the 65ch-wide paragraph inside the header */
+  margin-right: auto;
+}
 /* =========================================================
    6. Collection (product cards)
    ========================================================= */
@@ -290,7 +308,7 @@ header p {
 }
 
 /* Two columns on desktop, stacked on mobile. Same wrap trick as the cards. */
-.footer__inner {
+.contactform_container {
   max-width: 76rem;
   margin: 0 auto;
   display: flex;
@@ -298,16 +316,16 @@ header p {
   gap: var(--space-10);
 }
 
-.footer__intro {
+.contactform_intro {
   flex: 1 1 18rem;
 }
 
-.footer__title {
+.contactform_title {
   font-size: 2rem;
   margin-bottom: var(--space-4);
 }
 
-.footer__intro p {
+.contactform_title p {
   color: var(--gold-dark);
 }
 

@@ -1,4 +1,5 @@
 ---
+import Divider from "../../components/Divider.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import {Image} from 'astro:assets';
 import { hats, hatImage, materials, sizes } from "../../lib/hats.js";
@@ -43,7 +44,7 @@ sizeOptions.push(sizes.customFitted);
                  swaps the big image (app.js). -->
             <div class="gallery">
                 <div class="gallery__main">
-                    <Image src={hatImage(hat.images[0])} alt={hat.name} class="gallery__image" widths={[600, 1200]} sizes="(min-width: 900px) 34rem, 92vw" loading="eager" />
+                    <Image src={hatImage(hat.images[0])} alt={hat.name} class="gallery__image" style={`view-transition-name: hat-${hat.slug}`} widths={[600, 1200]} sizes="(min-width: 900px) 34rem, 92vw" loading="eager" />
                 </div>
                 {hat.images.length > 1 && (
                     <ul class="gallery__thumbs">
@@ -64,7 +65,7 @@ sizeOptions.push(sizes.customFitted);
             <div class="hat__info">
                 <p class="eyebrow">No. {hat.number}</p>
                 <h1 class="hat__title">{hat.name}</h1>
-                <div class="divider divider--left" aria-hidden="true"><span>+</span></div>
+                <Divider align="left" />
 
                 {hat.description.map((paragraph) => <p class="hat__description">{paragraph}</p>)}
 

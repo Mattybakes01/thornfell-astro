@@ -1,4 +1,5 @@
 ---
+import Divider from "../components/Divider.astro";
 // Shared template for the privacy, cookies and terms pages.
 // Each page passes a title and writes its sections inside the slot.
 import BaseLayout from "./BaseLayout.astro";
@@ -13,7 +14,7 @@ const { title, description } = Astro.props;
             <p class="eyebrow">Legal</p>
             <h1 class="page-title">{title}</h1>
             <p class="legal__updated">Last updated {site.legalUpdated}</p>
-            <div class="divider" aria-hidden="true"><span>+</span></div>
+            <Divider />
         </header>
 
         <div class="legal__body">

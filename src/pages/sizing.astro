@@ -1,4 +1,5 @@
 ---
+import Divider from "../components/Divider.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import sizesData from "../data/hats.json";
 
@@ -9,7 +10,7 @@ const { min, max } = sizesData.sizes;
     <section class="page-intro">
         <p class="eyebrow">Fit</p>
         <h1 class="page-title">Sizing Guide</h1>
-        <div class="divider" aria-hidden="true"><span>+</span></div>
+        <Divider />
         <p class="light-italic-serif-text">A good hat should sit snugly without pressing. Two minutes with a tape measure is all it takes.</p>
     </section>
 

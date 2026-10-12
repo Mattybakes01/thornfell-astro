@@ -1,4 +1,5 @@
 ---
+import Divider from "./Divider.astro";
 // Homepage hero.
 // The background photo is processed by Astro (resized, converted to webp)
 // and passed to the CSS as a custom property, so the URL is always correct
@@ -11,7 +12,7 @@ const hero = await getImage({ src: heroPhoto, width: 1920, format: 'webp' });
 <header class="hero" style={`--hero-image: url(${hero.src})`}>
     <p class="eyebrow">Handcrafted Headwear</p>
     <h1>THORNFELL</h1>
-    <div class="divider" aria-hidden="true"><span>+</span></div>
+    <Divider />
     <p class="light-italic-serif-text">Each hat forged by hand. Each thorn pressed in iron. A quiet signature, carried in shadow.</p>
     <div class="hero__actions">
         <a class="button" href="/collection">View collection</a>

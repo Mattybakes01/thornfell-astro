@@ -1,0 +1,14 @@
+---
+// The Iron Thorn divider: line, thorn, line.
+// When it scrolls into view, app.js adds .is-drawn and the CSS
+// draws the stem, fills the thorns, then grows the lines outwards.
+const { align = 'center' } = Astro.props;
+---
+<div class={`divider ${align === 'left' ? 'divider--left' : ''}`} aria-hidden="true">
+    <svg class="divider__thorn" viewBox="0 0 44 24" width="40" height="22">
+        <!-- A short stem with two hooked thorns, one up and one down -->
+        <path class="divider__thorn-bar" pathLength="100" d="M2 12 H42" />
+        <path class="divider__thorn-shape" pathLength="100" transform="translate(4 0)" d="M19 12 C21.5 11 23 8.5 24 6 C25 3.5 27 1.8 29.5 1 C27.6 3.5 27 7 27.4 12 Z" />
+        <path class="divider__thorn-shape" pathLength="100" transform="translate(-4 0)" d="M25 12 C22.5 13 21 15.5 20 18 C19 20.5 17 22.2 14.5 23 C16.4 20.5 17 17 16.6 12 Z" />
+    </svg>
+</div>

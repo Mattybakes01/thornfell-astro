@@ -1,4 +1,5 @@
 ---
+import Divider from "../components/Divider.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "../components/Header.astro";
 import HatCard from "../components/HatCard.astro";
@@ -22,7 +23,7 @@ const jsonLd = {
     <section class="about fade-in">
         <p class="eyebrow">About</p>
         <p class="pull-quote">Crafted without compromise.<br><em>Worn without conformity.</em></p>
-        <div class="divider" aria-hidden="true"><span>+</span></div>
+        <Divider />
         <p>Thornfell was born from a simple belief: A hat shouldn’t just be worn. It should say something about the person wearing it.</p>
         <p>Every Thornfell hat is individually handcrafted in Britain using traditional hat-making techniques, premium fur felts and carefully selected materials. No two are made quite the same.</p>
         <div class="section-action section-action--tight">

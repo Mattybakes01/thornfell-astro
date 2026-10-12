@@ -1,4 +1,5 @@
 ---
+import Divider from "../components/Divider.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { Image } from 'astro:assets';
 import heartTop from '../img/the-heart-of-the-west-2.jpeg';
@@ -26,7 +27,7 @@ const numerals = ['I', 'II', 'III', 'IV'];
     <section class="page-intro">
         <p class="eyebrow">About</p>
         <h1 class="page-title">Our Story</h1>
-        <div class="divider" aria-hidden="true"><span>+</span></div>
+        <Divider />
         <p class="pull-quote">A hat shouldn’t just be worn.<br><em>It should say something about the person wearing it.</em></p>
     </section>
 
@@ -64,7 +65,7 @@ const numerals = ['I', 'II', 'III', 'IV'];
     <section class="thorn fade-in">
         <p class="eyebrow">The Signature</p>
         <h2 class="thorn__title">The Iron Thorn</h2>
-        <div class="divider" aria-hidden="true"><span>+</span></div>
+        <Divider />
         <p class="pull-quote">It's our signature.<br><em>It's what Thornfell is.</em></p>
         <p>Look closely at a Thornfell hat and you'll find it. The Iron Thorn is the mark that says this hat was made by us, and the name it carries. More than a detail, it is the heart of every piece.</p>
     </section>

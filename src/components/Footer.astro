@@ -1,4 +1,5 @@
 ---
+import Divider from "./Divider.astro";
 import site from "../data/site.json";
 ---
 <footer class="footer">
@@ -12,7 +13,7 @@ import site from "../data/site.json";
                 {site.instagram && <li><a href={site.instagram} rel="noopener">Instagram</a></li>}
             </ul>
         </div>
-        <div class="divider" aria-hidden="true"><span>+</span></div>
+        <Divider />
         <ul class="footer__legal-links">
             <li><a href="/privacy">Privacy Policy</a></li>
             <li><a href="/cookies">Cookies</a></li>

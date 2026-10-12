@@ -70,3 +70,32 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.15 });                  // trigger when 15% of the element is visible
 
 document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
+
+// ---------------------------------------------------------
+// Iron Thorn dividers draw themselves when they come into view.
+// ---------------------------------------------------------
+const dividerObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('is-drawn');
+      dividerObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.5 });
+
+document.querySelectorAll('.divider').forEach((el) => dividerObserver.observe(el));
+
+// ---------------------------------------------------------
+// Torchlight on hat cards
+// Pass the pointer position into CSS as --x / --y so a radial
+// gradient can follow it. Only for mouse/trackpad, not touch.
+// ---------------------------------------------------------
+if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+  document.querySelectorAll('.hat-card__frame').forEach((frame) => {
+    frame.addEventListener('pointermove', (event) => {
+      const box = frame.getBoundingClientRect();
+      frame.style.setProperty('--x', `${event.clientX - box.left}px`);
+      frame.style.setProperty('--y', `${event.clientY - box.top}px`);
+    });
+  });
+}

@@ -145,7 +145,9 @@ a {
   color: var(--text);
 }
 
-/* Thin line — plus — thin line ornament */
+/* Iron Thorn divider (markup in components/Divider.astro).
+   Lines either side of a small thorn. The animation only runs once
+   app.js adds .is-drawn; without JS it simply shows as finished. */
 .divider {
   display: flex;
   align-items: center;
@@ -153,7 +155,6 @@ a {
   gap: var(--space-3);
   margin: var(--space-6) auto;
   color: var(--gold-dark);
-  font-size: 0.75rem;
 }
 
 .divider::before,
@@ -162,10 +163,12 @@ a {
   width: 4rem;
   height: 1px;
   background: linear-gradient(to right, transparent, var(--gold-dark));
+  transform-origin: right;
 }
 
 .divider::after {
   background: linear-gradient(to left, transparent, var(--gold-dark));
+  transform-origin: left;
 }
 
 .divider--left {
@@ -174,6 +177,58 @@ a {
 
 .divider--left::before {
   display: none;
+}
+
+.divider__thorn {
+  flex: none;
+  overflow: visible;
+}
+
+.divider__thorn-shape {
+  fill: var(--gold-dark);
+  stroke: var(--gold-light);
+  stroke-width: 1;
+}
+
+.divider__thorn-bar {
+  fill: none;
+  stroke: var(--gold-dark);
+  stroke-width: 1.5;
+}
+
+/* Starting state, only when JS is running (html.js is set in BaseLayout) */
+.js .divider::before,
+.js .divider::after {
+  transform: scaleX(0);
+  transition: transform 1s ease 0.6s;
+}
+
+.js .divider__thorn-shape {
+  fill-opacity: 0;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  transition: stroke-dashoffset 0.9s ease, fill-opacity 0.6s ease 0.6s;
+}
+
+.js .divider__thorn-bar {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  transition: stroke-dashoffset 0.6s ease 0.4s;
+}
+
+/* Drawn */
+.js .divider.is-drawn::before,
+.js .divider.is-drawn::after {
+  transform: scaleX(1);
+}
+
+.js .divider.is-drawn .divider__thorn-shape {
+  stroke-dashoffset: 0;
+  fill-opacity: 1;
+}
+
+.js .divider.is-drawn .divider__thorn-bar {
+  stroke-dashoffset: 0;
 }
 
 /* Outlined button. Used for links and form buttons. */
@@ -241,9 +296,7 @@ a {
   background-color: rgba(8, 8, 8, 0.9);
   backdrop-filter: blur(6px);            /* frosted look as content scrolls under it */
   border-bottom: 1px solid var(--line);
-
-  opacity: 0;
-  animation: fadeIn 1.2s ease-in 0.2s forwards;
+  view-transition-name: site-nav;   /* stays put while pages change underneath */
 }
 
 .site-nav__brand {
@@ -486,6 +539,31 @@ a {
   transition: transform 0.8s ease, filter 0.8s ease;
 }
 
+/* Torchlight: a dark layer with a clear circle that follows the
+   cursor (--x/--y set in app.js). Hidden until hover. */
+.hat-card__frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at var(--x, 50%) var(--y, 40%),
+    rgba(255, 214, 150, 0.22) 0,
+    rgba(255, 214, 150, 0.06) 5rem,
+    rgba(8, 8, 8, 0.25) 8rem,
+    rgba(8, 8, 8, 0.8) 14rem
+  );
+  mix-blend-mode: normal;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hat-card:hover .hat-card__frame::after {
+    opacity: 1;
+  }
+}
+
 /* The "little zoom in and light up" Tom liked */
 .hat-card:hover .hat-card__image,
 .hat-card:focus-visible .hat-card__image {
@@ -495,6 +573,7 @@ a {
 
 .hat-card__number {
   position: absolute;
+  z-index: 1;                  /* stays above the torchlight layer */
   top: var(--space-3);
   left: var(--space-3);
   padding: var(--space-1) var(--space-2);
@@ -868,7 +947,7 @@ a {
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .site-nav, .hero {
+  .hero {
     animation: none;
     opacity: 1;
   }
@@ -1326,4 +1405,66 @@ a {
     font-size: 0.8rem;
     border-bottom: 1px solid var(--line);
   }
+}
+
+/* =========================================================
+   18. Film grain
+   A fixed layer of SVG noise over everything. pointer-events: none
+   means it never gets in the way of clicks.
+   ========================================================= */
+body::after {
+  content: '';
+  position: fixed;
+  inset: -50%;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain 1s steps(6) infinite;
+}
+
+/* Jumping the layer around in small steps makes the grain flicker like film */
+@keyframes grain {
+  0%   { transform: translate(0, 0); }
+  20%  { transform: translate(-3%, 2%); }
+  40%  { transform: translate(2%, -4%); }
+  60%  { transform: translate(-4%, -2%); }
+  80%  { transform: translate(3%, 3%); }
+  100% { transform: translate(0, 0); }
+}
+
+/* =========================================================
+   19. Page transitions
+   Browser-native view transitions between pages (Chrome, Edge,
+   Safari 18+; other browsers just load normally). A hat card's
+   photo and the hat page's main photo share a view-transition-name,
+   so the photo morphs from one into the other.
+   ========================================================= */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.4s;
+}
+
+::view-transition-group(*) {
+  animation-duration: 0.5s;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::after { animation: none; }
+
+  @view-transition { navigation: none; }
+
+  .js .divider::before,
+  .js .divider::after,
+  .js .divider__thorn-shape,
+  .js .divider__thorn-bar {
+    transition: none;
+  }
+
+  .hat-card__frame::after { display: none; }
 }

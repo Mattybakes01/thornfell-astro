@@ -1,4 +1,5 @@
 ---
+import Divider from "../components/Divider.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import site from "../data/site.json";
 ---
@@ -7,7 +8,7 @@ import site from "../data/site.json";
     <section class="page-intro page-intro--full">
         <p class="eyebrow">Enquiry received</p>
         <h1 class="page-title">Thank You</h1>
-        <div class="divider" aria-hidden="true"><span>+</span></div>
+        <Divider />
         <p class="light-italic-serif-text">Your message is with us. {site.responseTime}</p>
         <div class="hero__actions">
             <a class="button" href="/collection">Back to the collection</a>

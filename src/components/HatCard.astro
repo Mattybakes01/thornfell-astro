@@ -8,7 +8,7 @@ const { hat } = Astro.props;
 
 <a class="hat-card" href={`/collection/${hat.slug}`}>
     <div class="hat-card__frame">
-        <Image src={hatImage(hat.images[0])} alt={hat.name} class="hat-card__image" widths={[400, 800]} sizes="(min-width: 720px) 20rem, 90vw" />
+        <Image src={hatImage(hat.images[0])} alt={hat.name} class="hat-card__image" style={`view-transition-name: hat-${hat.slug}`} widths={[400, 800]} sizes="(min-width: 720px) 20rem, 90vw" />
         <span class="hat-card__number">No. {hat.number}</span>
     </div>
     <h3 class="hat-card__title">{hat.name}</h3>

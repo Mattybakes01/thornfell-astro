@@ -3,6 +3,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "../components/Header.astro";
 import HatCard from "../components/HatCard.astro";
 import { hats } from "../lib/hats.js";
+import site from "../data/site.json";
 
 const jsonLd = {
     '@context': 'https://schema.org',
@@ -10,6 +11,8 @@ const jsonLd = {
     name: 'Thornfell',
     url: 'https://thornfell.co.uk',
     description: 'Handcrafted hats, made one at a time in Britain.',
+    email: site.email,
+    sameAs: [site.instagram],   // tells Google this Instagram account is ours
 };
 ---
 

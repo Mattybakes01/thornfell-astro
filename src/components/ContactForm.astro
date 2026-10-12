@@ -53,6 +53,12 @@ import site from "../data/site.json";
                         <dd><a href={`mailto:${site.email}`}>{site.email}</a></dd>
                     </div>
                 )}
+                {site.instagram && (
+                    <div class="details__row details__row--stacked">
+                        <dt>Instagram</dt>
+                        <dd><a href={site.instagram} rel="noopener">{site.instagramHandle}</a></dd>
+                    </div>
+                )}
                 <div class="details__row details__row--stacked">
                     <dt>Response time</dt>
                     <dd>{site.responseTime}</dd>

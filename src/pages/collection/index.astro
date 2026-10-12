@@ -1,0 +1,22 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import HatCard from "../../components/HatCard.astro";
+import { hats } from "../../lib/hats.js";
+---
+
+<BaseLayout title="The Collection – Thornfell" description="Every Thornfell hat, each one made by hand in Britain.">
+    <section class="page-intro">
+        <p class="eyebrow">Thornfell</p>
+        <h1 class="page-title">The Collection</h1>
+        <div class="divider" aria-hidden="true"><span>+</span></div>
+        <p class="light-italic-serif-text">Every hat is made to order and no two are alike. Choose a hat for the full story.</p>
+    </section>
+
+    <section class="collection collection--page">
+        <ul class="hat-grid">
+            {hats.map((hat) => (
+                <li class="fade-in"><HatCard hat={hat} /></li>
+            ))}
+        </ul>
+    </section>
+</BaseLayout>

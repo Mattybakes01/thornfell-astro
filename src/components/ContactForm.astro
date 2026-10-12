@@ -1,32 +1,72 @@
 ---
+import site from "../data/site.json";
 ---
-<div class="contactform_container">
-    <div class="contactform_intro">
-        <h2 class="contactform_title">Get in touch</h2>
-        <p>Every hat is made to order. Tell me what you have in mind and I'll get back to you within a few days.</p>
+<div class="contact">
+    <header class="contact__intro">
+        <p class="eyebrow">Get in touch</p>
+        <h1 class="page-title">Commission a Hat</h1>
+        <div class="divider" aria-hidden="true"><span>+</span></div>
+        <p class="light-italic-serif-text">Every hat is made to order. Tell us what you have in mind and we'll get back to you.</p>
+    </header>
+
+    <div class="contact__layout">
+        <!-- action="/thanks/" sends people to our own thank-you page after Netlify saves the form -->
+        <form class="contact-form" name="contact" method="POST" action="/thanks/" data-netlify="true" netlify-honeypot="bot-field">
+            <input type="hidden" name="form-name" value="contact" />
+            <p class="hidden" style="display:none">
+                <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+            </p>
+
+            <div class="form-field">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" autocomplete="name" placeholder="Your name" required>
+            </div>
+
+            <div class="form-field">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" autocomplete="email" placeholder="you@example.com" required>
+            </div>
+
+            <div class="form-field">
+                <label for="subject">Subject</label>
+                <input type="text" id="subject" name="subject" placeholder="What is this regarding?">
+            </div>
+
+            <div class="form-field">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" rows="6" placeholder="Tell us about the hat you have in mind: style, colour, size, any details..." required></textarea>
+            </div>
+
+            <button type="submit" class="button">Send enquiry</button>
+        </form>
+
+        <!-- Info column. Values come from src/data/site.json -->
+        <aside class="contact__info">
+            <dl class="details">
+                <div class="details__row details__row--stacked">
+                    <dt>Workshop</dt>
+                    <dd>Thornfell<br>{site.location}</dd>
+                </div>
+                {site.email && (
+                    <div class="details__row details__row--stacked">
+                        <dt>Email</dt>
+                        <dd><a href={`mailto:${site.email}`}>{site.email}</a></dd>
+                    </div>
+                )}
+                <div class="details__row details__row--stacked">
+                    <dt>Response time</dt>
+                    <dd>{site.responseTime}</dd>
+                </div>
+                <div class="details__row details__row--stacked">
+                    <dt>Commissions</dt>
+                    <dd>Each hat is made to order. Allow {site.leadTime} from confirming your commission.</dd>
+                </div>
+                <div class="details__row details__row--stacked">
+                    <dt>Sizing</dt>
+                    <dd>Not sure of your size? See our <a href="/sizing">sizing guide</a>.</dd>
+                </div>
+            </dl>
+            <p class="contact__note">We do not hold stock. Every hat is made for one person.</p>
+        </aside>
     </div>
-
-    <form class="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-        <input type="hidden" name="form-name" value="contact" />
-        <p class="hidden" style="display:none">
-            <label>Don't fill this out if you're human: <input name="bot-field" /></label>
-        </p>
-
-        <div class="form-field">
-            <label for="name">Name</label>
-            <input type="text" id="name" name="name" autocomplete="name">
-        </div>
-
-        <div class="form-field">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" autocomplete="email">
-        </div>
-
-        <div class="form-field">
-            <label for="message">Message</label>
-            <textarea id="message" name="message" rows="5"></textarea>
-        </div>
-
-        <button type="submit" class="button">Send message</button>
-    </form>
 </div>

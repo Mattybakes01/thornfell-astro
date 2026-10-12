@@ -1,15 +1,51 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap');
+/* Fonts are served from /public/fonts rather than Google Fonts.
+   Faster, and no visitor data goes to Google (see the cookies policy).
+   Both fonts are free under the SIL Open Font License. */
+@font-face {
+  font-family: 'Cinzel';
+  src: url('/fonts/cinzel-latin-wght-normal.woff2') format('woff2');
+  font-weight: 400 900;   /* variable font: one file covers every weight */
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  src: url('/fonts/cormorant-garamond-latin-400-normal.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  src: url('/fonts/cormorant-garamond-latin-500-normal.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  src: url('/fonts/cormorant-garamond-latin-400-italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
 
 /* =========================================================
    1. Design tokens
-   Variables for colours and spacing so every rule below pulls
+   Variables for colours, spacing and fonts so every rule below pulls
    from the same small set of values instead of magic numbers.
    ========================================================= */
 :root {
   /* Colours */
-  --bg: #040404;          /* page background */
-  --gold-light: #d2c19e;  /* headings, nav, primary text */
+  --bg: #080808;          /* page background */
+  --bg-raised: #111010;   /* cards, panels */
+  --line: #2a2620;        /* hairline borders */
+  --gold-light: #d2c19e;  /* headings, nav, primary accents */
   --gold-dark: #928169;   /* secondary / muted text */
+  --text: #d4cfc9;        /* body copy - a warm off-white reads better than gold for long text */
 
   /* Spacing scale (multiples of 4px, expressed in rem).
      Only use these for margin, padding and gap. */
@@ -21,15 +57,18 @@
   --space-8: 2rem;     /* 32px */
   --space-10: 2.5rem;  /* 40px */
   --space-16: 4rem;    /* 64px */
+  --space-24: 6rem;    /* 96px */
 
   /* Fonts */
-  --font-display: 'Cinzel', serif;  /* headings and nav */
-  --font-body: Georgia, serif;      /* paragraphs - Georgia is a safe, readable serif */
+  --font-display: 'Cinzel', serif;                 /* headings, nav, labels */
+  --font-body: 'Cormorant Garamond', Georgia, serif; /* paragraphs */
+
+  --max-width: 76rem;
+  --nav-height: 4.5rem;
 }
 
 /* =========================================================
    2. Base / reset
-   Sensible defaults for every element. Kept minimal.
    ========================================================= */
 *, *::before, *::after {
   box-sizing: border-box;   /* padding counts inside width, not on top of it */
@@ -37,308 +76,653 @@
 
 html {
   font-size: 100%;          /* 16px by default, respects user browser settings */
+  scroll-behavior: smooth;  /* smooth scrolling for any in-page links */
+  scroll-padding-top: var(--nav-height); /* so the sticky nav doesn't cover anchored headings */
 }
 
 body {
   margin: 0;
   background-color: var(--bg);
   font-family: var(--font-body);
-  font-size: 1rem;
-  line-height: 1.6;         /* serif body text reads better with a touch more leading than 1.5 */
-  color: var(--gold-light);
+  font-size: 1.125rem;      /* Cormorant runs small, so 18px base */
+  line-height: 1.65;
+  color: var(--text);
 }
 
 img {
-  max-width: 100%;          /* images never overflow their container */
-  display: block;           /* removes the small gap under inline images */
+  max-width: 100%;
+  display: block;
 }
 
-/* Headings share a font and colour. No text-align here on purpose:
-   left is the browser default, and we only centre where we choose to. */
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
 h1, h2, h3, h4 {
   font-family: var(--font-display);
+  font-weight: 400;
   color: var(--gold-light);
-  line-height: 1.2;         /* tighter than body text so big headings don't look airy */
+  line-height: 1.2;
+  letter-spacing: 0.08em;
   margin: 0 0 var(--space-2);
 }
 
-h1 { font-size: clamp(2rem, 10vw, 4rem);; }
-h2 { font-size: 2.5rem; }
-h3 { font-size: 1.5rem; }
-h4 { font-size: 1.25rem; }
+h1 { font-size: clamp(2.5rem, 10vw, 5rem); }
+h2 { font-size: clamp(1.75rem, 5vw, 2.5rem); }
+h3 { font-size: 1.25rem; }
 
 p {
-  margin: 0 0 var(--space-4);   /* bottom margin only, so gaps between elements are predictable */
-  max-width: 65ch;              /* keeps line length readable */
+  margin: 0 0 var(--space-4);
+  max-width: 65ch;
 }
 
-/* Links inherit the gold colour and lose the underline.
-   One rule covers every state, so no need to list :link/:visited/:hover/:active separately. */
 a {
   color: var(--gold-light);
   text-decoration: none;
 }
 
 /* =========================================================
-   3. Utility / text styles
-   Reusable classes for one-off text treatments.
+   3. Reusable bits
    ========================================================= */
-.dark-upper-case-text {
+
+/* Small spaced-out capitals above headings, e.g. "THE COLLECTION" */
+.eyebrow {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
   color: var(--gold-dark);
-  font-size: 1.1rem;
+  margin-bottom: var(--space-4);
+  max-width: none;          /* don't inherit the 65ch paragraph limit, so centring works */
 }
 
 .light-italic-serif-text {
-  color: var(--gold-light);
   font-style: italic;
-  font-size: 1.15rem;
+  font-size: 1.3rem;
+  color: var(--text);
 }
 
-/* Generic centred wrapper for page sections. Reuse this on any
-   section that should sit in the middle with a max width.
-   (Not used yet - the collection and footer set their own widths.) */
-.container {
-  max-width: 76rem;
-  margin: 0 auto;
-  padding: 0 var(--space-6);
+/* Thin line — plus — thin line ornament */
+.divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  margin: var(--space-6) auto;
+  color: var(--gold-dark);
+  font-size: 0.75rem;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  width: 4rem;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold-dark));
+}
+
+.divider::after {
+  background: linear-gradient(to left, transparent, var(--gold-dark));
+}
+
+.divider--left {
+  justify-content: flex-start;
+}
+
+.divider--left::before {
+  display: none;
+}
+
+/* Outlined button. Used for links and form buttons. */
+.button {
+  display: inline-block;
+  padding: var(--space-3) var(--space-8);
+  background: transparent;
+  border: 1px solid var(--gold-dark);
+  color: var(--gold-light);
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.button:hover,
+.button:focus-visible {
+  background: var(--gold-light);
+  border-color: var(--gold-light);
+  color: var(--bg);
+  outline: none;
+}
+
+/* Quiet uppercase text link, e.g. "Get in touch", "← Collection" */
+.text-link {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+  transition: color 0.3s ease;
+}
+
+.text-link:hover,
+.text-link:focus-visible {
+  color: var(--gold-light);
+}
+
+.section-action {
+  text-align: center;
+  margin-top: var(--space-16);
+}
+
+.section-action--tight {
+  margin-top: var(--space-8);
 }
 
 /* =========================================================
    4. Navigation
+   Sticky bar: small logo + name on the left, links on the right.
    ========================================================= */
-nav {
+.site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  min-height: var(--nav-height);
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-wrap: wrap;
   align-items: center;
-  gap: var(--space-4);
-  padding: var(--space-4);
-  background-color: var(--bg);
-  font-family: var(--font-display);
-  font-size: 1rem;
-  color: var(--gold-light);
-  text-align: center;
+  justify-content: space-between;
+  gap: var(--space-3) var(--space-6);
+  padding: var(--space-3) max(var(--space-6), (100% - var(--max-width)) / 2);
+  background-color: rgba(8, 8, 8, 0.9);
+  backdrop-filter: blur(6px);            /* frosted look as content scrolls under it */
+  border-bottom: 1px solid var(--line);
 
-  /* Fade in on load */
   opacity: 0;
   animation: fadeIn 1.2s ease-in 0.2s forwards;
 }
 
-nav a {
+.site-nav__brand {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
 }
 
-nav img {
-  height: 10rem;
-  width: auto;
+.site-nav__logo {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.site-nav__links {
+  display: flex;
+  gap: var(--space-6);
+}
+
+.site-nav__links a {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+  transition: color 0.3s ease;
+}
+
+.site-nav__links a:hover,
+.site-nav__links a:focus-visible {
+  color: var(--gold-light);
 }
 
 /* =========================================================
-   5. Header / hero
+   5. Hero (homepage)
    ========================================================= */
-/* Nav + header together fill the first screen, so the collection
-   only appears once the user scrolls. */
 .hero {
-  min-height: 100svh;      /* svh = "small viewport height", correct on mobile where the browser bar shrinks */
-  display: flex;
-  flex-direction: column;
-}
-
-header {
-  min-height: 80svh;
-  flex: 1;                 /* takes all the height the nav doesn't use */
+  min-height: calc(100svh - var(--nav-height));  /* fills the first screen under the nav */
 
   /* Three layers, top to bottom: flat dark tint, radial vignette, photo */
   background-image:
-    linear-gradient(hsla(0, 0%, 2%, 0.7), rgba(4, 4, 4, 0.874)),
+    linear-gradient(rgba(8, 8, 8, 0.7), rgba(8, 8, 8, 0.85)),
     radial-gradient(ellipse at center, transparent 10%, var(--bg) 100%),
     url(/src/img/header-img.jpg);
-  background-size: cover;               /* fills the box, crops the overflow */
-  background-position: center top left; /* which part survives the crop on mobile */
+  background-size: cover;
+  background-position: center top;
   background-repeat: no-repeat;
 
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: var(--space-8) var(--space-6);
-  text-align: center;                   /* hero copy is short, so centred is fine here */
+  padding: var(--space-16) var(--space-6);
+  text-align: center;
 
-  /* Fade in slightly after the nav */
   opacity: 0;
-animation: fadeIn 1.2s ease-out 0.6s forwards;
-  /*              ^duration    ^delay */
+  animation: fadeIn 1.2s ease-out 0.6s forwards;
 }
 
-header h1 {
-  margin: var(--space-8) 0;
+.hero h1 {
+  letter-spacing: 0.15em;
+  margin: 0;
 }
 
-header p {
-  margin-left: auto;    /* centres the 65ch-wide paragraph inside the header */
+.hero p {
+  margin-left: auto;
   margin-right: auto;
 }
 
-
-.about {
-  max-width: 76rem;
-  margin: 0 auto;                            /* centres the section */
-  padding: var(--space-16) var(--space-6);   /* generous vertical space, breathing room on mobile */
+.hero .light-italic-serif-text {
+  max-width: 34ch;
 }
 
-.about h2 {
-  font-size: 2rem;
-  text-align: center;                        /* the section title is the one thing we centre here */
-  margin-bottom: var(--space-10);
-}
-
-.about p {
-  text-align: center;   
-  margin-left: auto;    /* centres the 65ch-wide paragraph inside the header */
-  margin-right: auto;
-}
-/* =========================================================
-   6. Collection (product cards)
-   ========================================================= */
-.collection {
-  max-width: 76rem;
-  margin: 0 auto;                            /* centres the section */
-  padding: var(--space-16) var(--space-6);   /* generous vertical space, breathing room on mobile */
-}
-
-.collection h2 {
-  font-size: 2rem;
-  text-align: center;                        /* the section title is the one thing we centre here */
-  margin-bottom: var(--space-10);
-}
-
-/* Flexbox row that wraps. Cards start at 16rem and grow to fill,
-   justify-content centres a lone card on narrow screens and a partial last row on wide ones. */
-.card-grid {
+.hero__actions {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: var(--space-8);
-}
-
-.card {
-  flex: 1 1 16rem;      /* grow, shrink, start at 16rem */
-  max-width: 20rem;     /* stops last-row cards stretching */
-  display: flex;
-  flex-direction: column;
-}
-
-.card__image {
-  width: 100%;
-  height: auto;
-  aspect-ratio: 1;      /* every hat gets the same square frame */
-  object-fit: cover;    /* fills the frame without squashing */
-  border-radius: 0.25rem;
-}
-
-.card__body {
-  padding: var(--space-3) 0;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);  /* space between title, teaser, and toggle */
-}
-
-.card__title {
-  font-size: 1.125rem;
-  margin: 0;
-  text-align: left;     /* explicit, in case a centred rule sneaks in later */
-}
-
-.card__description {
-  font-size: 0.9375rem; /* 15px - a touch smaller than body, still readable */
-  line-height: 1.6;
-  color: var(--gold-dark);
-  margin: 0;            /* the body's gap handles spacing */
-  max-width: none;      /* the card already limits width, so drop the 65ch rule */
-  text-align: left;
-}
-
-/* --- Read more / Read less ---
-   The outer div is a grid whose single row animates from 0fr (collapsed)
-   to 1fr (full content height). The inner div clips the text while it moves. */
-.card__more {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows 0.3s ease;
-}
-
-.card__more-inner {
-  overflow: hidden;
-}
-
-.card__more.is-open {
-  grid-template-rows: 1fr;
-}
-
-/* Space between the hidden paragraphs */
-.card__more-inner p + p {
-  margin-top: var(--space-3);
-}
-
-/* The toggle, styled as a small underlined text link rather than a button */
-.card__toggle {
-  align-self: flex-start;
-  padding: 0 0 0.125rem;
-  background: none;
-  border: none;
-  border-bottom: 1px solid var(--gold-dark);
-  color: var(--gold-light);
-  font-family: var(--font-display);
-  font-size: 0.875rem;
-  cursor: pointer;
-}
-
-.card__toggle:hover,
-.card__toggle:focus-visible {
-  border-bottom-color: var(--gold-light);
-  outline: none;
+  align-items: center;
+  gap: var(--space-6) var(--space-10);
+  margin-top: var(--space-8);
 }
 
 /* =========================================================
-   7. Footer / contact
+   6. About
    ========================================================= */
-.footer {
-  border-top: 1px solid var(--gold-dark);   /* thin rule separates it from the collection */
-  padding: var(--space-16) var(--space-6) var(--space-8);
-}
-
-/* Two columns on desktop, stacked on mobile. Same wrap trick as the cards. */
-.contactform_container {
-  max-width: 76rem;
+.about {
+  max-width: var(--max-width);
   margin: 0 auto;
+  padding: var(--space-24) var(--space-6);
+  text-align: center;
+}
+
+.about p {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.page-intro .pull-quote {
+  margin-top: var(--space-8);
+}
+
+/* Homepage "Commission a hat" block */
+.commission {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--space-24) var(--space-6);
+  border-top: 1px solid var(--line);
+  text-align: center;
+}
+
+.commission p {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.pull-quote {
+  font-style: italic;
+  font-size: clamp(1.75rem, 5vw, 2.75rem);
+  line-height: 1.3;
+  color: var(--text);
+}
+
+.pull-quote em {
+  color: var(--gold-light);
+}
+
+/* =========================================================
+   7. Collection: shared section, carousel, grid, cards
+   ========================================================= */
+.collection {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--space-24) var(--space-6);
+  border-top: 1px solid var(--line);
+  text-align: center;
+}
+
+.collection h2 {
+  margin-bottom: var(--space-10);
+}
+
+.collection--page {
+  border-top: none;
+  padding-top: 0;
+}
+
+/* --- Carousel ---
+   The track is a flex row that scrolls sideways. scroll-snap makes each
+   card line up neatly at the left edge when scrolling stops. */
+.carousel {
+  position: relative;
+}
+
+.carousel__track {
   display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-10);
+  gap: var(--space-6);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;     /* hide scrollbar in Firefox */
+  padding-bottom: var(--space-2);
 }
 
-.contactform_intro {
-  flex: 1 1 18rem;
+.carousel__track::-webkit-scrollbar {
+  display: none;             /* hide scrollbar in Chrome/Safari */
 }
 
-.contactform_title {
-  font-size: 2rem;
-  margin-bottom: var(--space-4);
+.carousel__slide {
+  flex: 0 0 80%;             /* mobile: one card plus a peek of the next */
+  scroll-snap-align: start;
 }
 
-.contactform_title p {
+.carousel__button {
+  position: absolute;
+  top: 40%;                  /* roughly the middle of the image */
+  z-index: 1;
+  width: 2.75rem;
+  height: 2.75rem;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--gold-dark);
+  border-radius: 50%;
+  background: rgba(8, 8, 8, 0.8);
+  color: var(--gold-light);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: opacity 0.3s ease, border-color 0.3s ease;
+}
+
+.carousel__button:hover,
+.carousel__button:focus-visible {
+  border-color: var(--gold-light);
+  outline: none;
+}
+
+.carousel__button:disabled {
+  opacity: 0.25;
+  cursor: default;
+}
+
+.carousel__button--prev { left: calc(var(--space-4) * -1); }
+.carousel__button--next { right: calc(var(--space-4) * -1); }
+
+/* --- Collection page grid --- */
+.hat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  gap: var(--space-16) var(--space-8);
+}
+
+/* --- Hat card --- */
+.hat-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  text-align: left;
+  color: var(--text);
+}
+
+.hat-card__frame {
+  position: relative;
+  overflow: hidden;            /* keeps the zoomed image inside the frame */
+  border: 1px solid var(--line);
+  margin-bottom: var(--space-3);
+}
+
+.hat-card__image {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 4;         /* every hat gets the same portrait frame */
+  object-fit: cover;
+  filter: brightness(0.85);
+  transition: transform 0.8s ease, filter 0.8s ease;
+}
+
+/* The "little zoom in and light up" Tom liked */
+.hat-card:hover .hat-card__image,
+.hat-card:focus-visible .hat-card__image {
+  transform: scale(1.05);
+  filter: brightness(1.05);
+}
+
+.hat-card__number {
+  position: absolute;
+  top: var(--space-3);
+  left: var(--space-3);
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid var(--line);
+  background: rgba(8, 8, 8, 0.7);
+  font-family: var(--font-display);
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
   color: var(--gold-dark);
 }
 
-.contact-form {
-  flex: 1 1 22rem;
-  max-width: 32rem;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
+.hat-card__title {
+  font-size: 1.1rem;
+  margin: 0;
 }
 
-/* Label sits above its input */
+.hat-card__short {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--gold-dark);
+  margin: 0;
+}
+
+.hat-card__view {
+  margin-top: auto;
+  padding-top: var(--space-2);
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+  transition: color 0.3s ease;
+}
+
+.hat-card:hover .hat-card__view {
+  color: var(--gold-light);
+}
+
+/* =========================================================
+   8. Page intro (collection page header)
+   ========================================================= */
+.page-intro {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--space-24) var(--space-6) var(--space-16);
+  text-align: center;
+}
+
+.page-title {
+  font-size: clamp(2.25rem, 8vw, 4rem);
+}
+
+.page-intro p {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* =========================================================
+   9. Hat page
+   ========================================================= */
+.hat {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--space-10) var(--space-6) var(--space-24);
+}
+
+.hat__back {
+  display: inline-block;
+  margin-bottom: var(--space-8);
+}
+
+/* Stacked on mobile, two columns from 900px (see section 13) */
+.hat__layout {
+  display: grid;
+  gap: var(--space-10);
+}
+
+.gallery__main {
+  border: 1px solid var(--line);
+  overflow: hidden;
+}
+
+.gallery__image {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+}
+
+.gallery__thumbs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+}
+
+.gallery__thumb {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 1px solid var(--line);
+  background: none;
+  cursor: pointer;
+  opacity: 0.55;
+  transition: opacity 0.3s ease, border-color 0.3s ease;
+}
+
+.gallery__thumb img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+.gallery__thumb:hover,
+.gallery__thumb:focus-visible,
+.gallery__thumb[aria-pressed="true"] {
+  opacity: 1;
+  border-color: var(--gold-dark);
+  outline: none;
+}
+
+.hat__title {
+  font-size: clamp(2rem, 6vw, 3rem);
+}
+
+.hat__description {
+  color: var(--text);
+}
+
+.hat__subheading {
+  font-size: 0.8rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+  margin: var(--space-16) 0 var(--space-4);
+}
+
+/* Enquiry box */
+.hat-enquiry {
+  display: grid;
+  gap: var(--space-4);
+  margin-top: var(--space-10);
+  padding: var(--space-8) var(--space-6);
+  border: 1px solid var(--line);
+  background: var(--bg-raised);
+}
+
+.hat-enquiry .button {
+  justify-self: start;
+}
+
+.optional {
+  color: var(--gold-dark);
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+/* Details list (Style, Colour, Finish...) */
+.details {
+  margin: 0;
+}
+
+.details__row {
+  display: grid;
+  grid-template-columns: 7rem 1fr;
+  gap: var(--space-4);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.details dt {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+  padding-top: 0.3em;
+}
+
+.details dd {
+  margin: 0;
+}
+
+/* Next hat link at the bottom */
+.next-hat {
+  display: block;
+  margin-top: var(--space-24);
+  padding-top: var(--space-10);
+  border-top: 1px solid var(--line);
+  text-align: center;
+}
+
+.next-hat__body {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-4);
+  text-align: left;
+}
+
+.next-hat__image {
+  width: 4rem;
+  height: 4rem;
+  object-fit: cover;
+  border: 1px solid var(--line);
+}
+
+.next-hat__name {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: color 0.3s ease;
+}
+
+.next-hat__number {
+  display: block;
+  font-style: italic;
+  color: var(--gold-dark);
+}
+
+.next-hat:hover .next-hat__name {
+  color: var(--text);
+}
+
+/* =========================================================
+   10. Forms (contact + hat enquiry share these)
+   ========================================================= */
 .form-field {
   display: flex;
   flex-direction: column;
@@ -347,67 +731,125 @@ header p {
 
 .form-field label {
   font-family: var(--font-display);
-  font-size: 0.875rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
   color: var(--gold-light);
 }
 
-/* Inputs: transparent with a bottom border only, which suits the dark, understated look */
+/* Transparent fields with a bottom border only */
 .form-field input,
-.form-field textarea {
+.form-field textarea,
+.form-field select {
   width: 100%;
   padding: var(--space-3) var(--space-2);
   background: transparent;
   border: none;
   border-bottom: 1px solid var(--gold-dark);
-  color: var(--gold-light);
+  border-radius: 0;
+  color: var(--text);
   font-family: var(--font-body);
-  font-size: 1rem;
+  font-size: 1.1rem;
+}
+
+.form-field select option {
+  background: var(--bg);   /* dropdown list stays dark */
 }
 
 .form-field textarea {
-  resize: vertical;       /* user can make it taller, not wider */
+  resize: vertical;
 }
 
-/* Visible focus state, both for keyboard users and because it looks good */
 .form-field input:focus,
-.form-field textarea:focus {
+.form-field textarea:focus,
+.form-field select:focus {
   outline: none;
   border-bottom-color: var(--gold-light);
 }
 
-.button {
-  align-self: flex-start;   /* don't stretch to full width */
-  padding: var(--space-3) var(--space-6);
-  background: transparent;
-  border: 1px solid var(--gold-light);
-  color: var(--gold-light);
+/* =========================================================
+   11. Footer / contact
+   ========================================================= */
+.footer {
+  padding: 0 var(--space-6) var(--space-8);
+}
+
+/* Contact page wrapper */
+.contact-page {
+  padding: 0 var(--space-6) var(--space-24);
+}
+
+.footer__bottom {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding-top: var(--space-8);
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.footer__brand {
   font-family: var(--font-display);
-  font-size: 0.875rem;
-  cursor: pointer;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
 }
 
-.button:hover,
-.button:focus-visible {
-  background: var(--gold-light);
-  color: var(--bg);
+.footer__links {
+  display: flex;
+  gap: var(--space-6);
 }
 
-.footer__legal {
-  max-width: 76rem;
-  margin: var(--space-10) auto 0;
-  font-size: 0.875rem;
+.footer__links a {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
   color: var(--gold-dark);
 }
 
+.footer__links a:hover {
+  color: var(--gold-light);
+}
+
+.footer__legal-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-2) var(--space-6);
+}
+
+.footer__legal-links a {
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+}
+
+.footer__legal-links a:hover {
+  color: var(--gold-light);
+}
+
+.footer__legal {
+  max-width: var(--max-width);
+  margin: var(--space-6) auto 0;
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--gold-dark);
+  text-align: center;
+}
+
 /* =========================================================
-   8. Animations
+   12. Animations
    ========================================================= */
 @keyframes fadeIn {
   to { opacity: 1; }
 }
 
-/* Scroll-triggered fade for sections further down the page.
-   Starts invisible; app.js adds .is-visible when the element enters the viewport. */
+/* Scroll-triggered fade. app.js adds .is-visible on entry. */
 .fade-in {
   opacity: 0;
   transition: opacity 1.2s ease-out;
@@ -417,27 +859,381 @@ header p {
   opacity: 1;
 }
 
-/* Respect users who have asked for less motion */
 @media (prefers-reduced-motion: reduce) {
-  nav, header {
+  html { scroll-behavior: auto; }
+  .site-nav, .hero {
     animation: none;
     opacity: 1;
-  }
-  .card__more {
-    transition: none;
   }
   .fade-in {
     opacity: 1;
     transition: none;
   }
+  .hat-card__image {
+    transition: none;
+  }
 }
 
 /* =========================================================
-   9. Responsive tweaks
-   Mobile styles are the default above; this adds changes for wider screens.
+   13. Responsive tweaks
+   Mobile styles are the default above; these add changes for wider screens.
    ========================================================= */
-@media (min-width: 720px) {
-  header {
-    background-position: center top;   /* show more of the photo when there's room */
+@media (min-width: 600px) {
+  .carousel__slide {
+    flex-basis: calc((100% - var(--space-6)) / 2);       /* 2 cards */
+  }
+}
+
+@media (min-width: 900px) {
+  .carousel__slide {
+    flex-basis: calc((100% - var(--space-6) * 3) / 4);   /* 4 cards */
+  }
+
+  .hat__layout {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-16);
+    align-items: start;
+  }
+
+  .gallery {
+    position: sticky;      /* photos stay put while the text scrolls */
+    top: calc(var(--nav-height) + var(--space-6));
+  }
+}
+
+/* Very small phones: buttons sit inside the carousel edge */
+@media (max-width: 480px) {
+  .carousel__button--prev { left: var(--space-1); }
+  .carousel__button--next { right: var(--space-1); }
+}
+
+/* =========================================================
+   14. Contact page
+   ========================================================= */
+.contact {
+  max-width: 64rem;
+  margin: 0 auto;
+}
+
+.contact__intro {
+  padding: var(--space-24) 0 var(--space-16);
+  text-align: center;
+}
+
+.contact__intro p {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Stacked on mobile, form + info column from 900px */
+.contact__layout {
+  display: grid;
+  gap: var(--space-16);
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.contact-form .button {
+  align-self: flex-start;
+  margin-top: var(--space-4);
+}
+
+.form-field ::placeholder {
+  color: var(--gold-dark);
+  opacity: 0.6;
+  font-style: italic;
+}
+
+.details__row--stacked {
+  grid-template-columns: 1fr;
+  gap: var(--space-1);
+}
+
+.contact__note {
+  margin-top: var(--space-6);
+  font-style: italic;
+  color: var(--gold-dark);
+}
+
+/* Small link inside a form label, e.g. "Sizing guide" */
+.label-link {
+  margin-left: var(--space-2);
+  color: var(--gold-dark);
+  text-transform: none;
+  letter-spacing: 0;
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 0.95rem;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.hat-enquiry__note {
+  margin: 0;
+  font-style: italic;
+  color: var(--gold-dark);
+}
+
+/* Thank you + 404: centred in the screen */
+.page-intro--full {
+  min-height: calc(100svh - var(--nav-height) - 12rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* =========================================================
+   15. Legal pages + long-form text (sizing guide)
+   ========================================================= */
+.legal {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: var(--space-24) var(--space-6);
+}
+
+.legal__header {
+  text-align: center;
+  margin-bottom: var(--space-10);
+}
+
+.legal__updated {
+  margin: var(--space-2) auto 0;
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+}
+
+/* Section headings and lists inside legal + prose pages */
+.legal__body h2,
+.prose h2 {
+  font-size: 1.1rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin: var(--space-10) 0 var(--space-3);
+}
+
+.legal__body ul {
+  margin: 0 0 var(--space-4);
+  padding-left: var(--space-6);
+  list-style: disc;
+}
+
+.legal__body li {
+  margin-bottom: var(--space-1);
+}
+
+.legal__body li::marker {
+  color: var(--gold-dark);
+}
+
+.legal__body a,
+.prose a,
+.contact__info a {
+  text-decoration: underline;
+  text-decoration-color: var(--gold-dark);
+  text-underline-offset: 0.2em;
+}
+
+.legal__footer {
+  margin-top: var(--space-16);
+  padding-top: var(--space-8);
+  border-top: 1px solid var(--line);
+  text-align: center;
+}
+
+.prose {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 0 var(--space-6) var(--space-24);
+}
+
+/* Numbered steps (sizing guide) */
+.steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.steps li {
+  display: grid;
+  grid-template-columns: 3.5rem 1fr;
+  gap: var(--space-4);
+  padding: var(--space-6) 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.steps h3 {
+  font-size: 1rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: var(--space-2);
+}
+
+.steps p {
+  margin: 0;
+}
+
+.steps__number,
+.process__numeral {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  line-height: 1;
+  color: var(--gold-dark);
+  opacity: 0.6;
+}
+
+/* =========================================================
+   16. About page sections
+   ========================================================= */
+
+/* Image + text side by side (stacked on mobile) */
+.split {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--space-16) var(--space-6);
+  display: grid;
+  gap: var(--space-10);
+  align-items: center;
+}
+
+.split__media {
+  border: 1px solid var(--line);
+  overflow: hidden;
+}
+
+.split__media img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+.split__text h2 {
+  margin-bottom: var(--space-6);
+}
+
+/* Full-width tinted band for process + materials */
+.band {
+  margin: var(--space-16) 0;
+  padding: var(--space-24) var(--space-6);
+  background: var(--bg-raised);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.band__inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.band__inner h2 {
+  margin-bottom: var(--space-10);
+}
+
+.band__lead {
+  margin: 0 auto var(--space-10);
+  font-style: italic;
+  color: var(--text);
+}
+
+.band__lead:last-child {
+  margin: var(--space-10) auto 0;
+}
+
+.process,
+.materials {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-10) var(--space-8);
+  text-align: left;
+}
+
+.process__step,
+.materials__item {
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--gold-dark);
+}
+
+.process__step h3,
+.materials__item h3 {
+  margin: var(--space-4) 0 var(--space-3);
+  font-size: 1.1rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.materials__item h3 {
+  margin-top: 0;
+}
+
+.process__step p,
+.materials__item p {
+  margin: 0;
+  color: var(--text);
+}
+
+/* The Iron Thorn: big centred statement */
+.thorn {
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: var(--space-24) var(--space-6);
+  text-align: center;
+}
+
+.thorn__title {
+  font-size: clamp(2.25rem, 8vw, 4rem);
+}
+
+.thorn p {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.closing {
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: var(--space-16) var(--space-6) var(--space-24);
+  text-align: center;
+}
+
+.closing p {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.closing .pull-quote {
+  margin: var(--space-10) auto;
+}
+
+@media (min-width: 700px) {
+  .materials { grid-template-columns: repeat(3, 1fr); }
+  .process { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 900px) {
+  .split {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-16);
+  }
+
+  /* Swap the order: text left, photo right */
+  .split--reverse .split__media {
+    order: 2;
+  }
+
+  .process { grid-template-columns: repeat(4, 1fr); }
+
+  .contact__layout {
+    grid-template-columns: 3fr 2fr;
   }
 }

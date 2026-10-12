@@ -1,0 +1,35 @@
+---
+import LegalLayout from "../layouts/LegalLayout.astro";
+import ContactLine from "../components/ContactLine.astro";
+import site from "../data/site.json";
+---
+
+<LegalLayout title="Terms & Conditions" description="The terms for using the Thornfell website and commissioning a Thornfell hat.">
+    <h2>About these terms</h2>
+    <p>These terms cover your use of this website and any hat you commission from Thornfell, a sole trader based in the United Kingdom. By using the site or placing a commission, you agree to them.</p>
+
+    <h2>Made to order</h2>
+    <p>Every Thornfell hat is made by hand, to order. Nothing is held in stock. Once we have agreed the details of your hat with you, please allow {site.leadTime} for it to be made. We will tell you if your commission is likely to take longer.</p>
+
+    <h2>Handmade differences</h2>
+    <p>Because each hat is shaped, distressed and finished by hand, no two are identical. The hats shown on this website are examples. Your hat will be made in the same style, but natural variation in felt, leather and finishing is part of its character and is not a fault.</p>
+
+    <h2>Sizing</h2>
+    <p>Please measure carefully using our <a href="/sizing">sizing guide</a> before ordering. If you choose a custom fitted hat, we will make it to the measurements you give us.</p>
+
+    <h2>Cancellations and returns</h2>
+    <p>Our hats are made to your specification. Under the Consumer Contracts Regulations 2013, the usual 14-day right to cancel does not apply to goods made to a customer's specifications or clearly personalised. We cannot accept returns simply because you have changed your mind once work has started.</p>
+    <p>This does not affect your legal rights. If your hat arrives faulty or not as described, you are protected by the Consumer Rights Act 2015. Please <ContactLine /> and we will put it right.</p>
+
+    <h2>Prices and payment</h2>
+    <p>Prices are confirmed when we agree your commission. We will let you know how and when to pay before any work begins.</p>
+
+    <h2>Website content</h2>
+    <p>All photographs, text and designs on this website belong to Thornfell. Please do not copy or reuse them without our permission.</p>
+
+    <h2>Governing law</h2>
+    <p>These terms are governed by the laws of England and Wales.</p>
+
+    <h2>Questions</h2>
+    <p>If you have any questions about these terms, <ContactLine />.</p>
+</LegalLayout>

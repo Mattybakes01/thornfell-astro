@@ -1,0 +1,27 @@
+---
+// Shared template for the privacy, cookies and terms pages.
+// Each page passes a title and writes its sections inside the slot.
+import BaseLayout from "./BaseLayout.astro";
+import site from "../data/site.json";
+
+const { title, description } = Astro.props;
+---
+
+<BaseLayout title={`${title} – Thornfell`} description={description}>
+    <article class="legal">
+        <header class="legal__header">
+            <p class="eyebrow">Legal</p>
+            <h1 class="page-title">{title}</h1>
+            <p class="legal__updated">Last updated {site.legalUpdated}</p>
+            <div class="divider" aria-hidden="true"><span>+</span></div>
+        </header>
+
+        <div class="legal__body">
+            <slot />
+        </div>
+
+        <footer class="legal__footer">
+            <a class="text-link" href="/">&larr; Back to home</a>
+        </footer>
+    </article>
+</BaseLayout>

@@ -3,8 +3,14 @@ import {Image} from 'astro:assets';
 import navLogo from '../img/logo.jpg';
 ---
 
-<nav>
-        <a class="navlogolink" href="#">
-            <Image src={navLogo} alt="Thornfell logo"/>
-        </a>
+<nav class="site-nav">
+    <a class="site-nav__brand" href="/">
+        <Image src={navLogo} alt="" class="site-nav__logo" width={80} />
+        <span>Thornfell</span>
+    </a>
+    <ul class="site-nav__links">
+        <li><a href="/collection">Collection</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/contact">Contact</a></li>
+    </ul>
 </nav>

@@ -1,0 +1,9 @@
+---
+// "How to reach us" wording for the legal pages.
+// Shows the email address once one is added to site.json,
+// otherwise points people to the contact form.
+import site from "../data/site.json";
+---
+{site.email
+    ? <>email us at <a href={`mailto:${site.email}`}>{site.email}</a> or use our <a href="/contact">contact form</a></>
+    : <>get in touch using our <a href="/contact">contact form</a></>}

@@ -1,0 +1,137 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import {Image} from 'astro:assets';
+import { hats, hatImage, materials, sizes } from "../../lib/hats.js";
+import site from "../../data/site.json";
+
+// Astro builds one static page per hat. getStaticPaths tells it which
+// slugs exist and hands each page its hat as a prop.
+export function getStaticPaths() {
+    return hats.map((hat, index) => ({
+        params: { slug: hat.slug },
+        props: { hat, next: hats[(index + 1) % hats.length] },
+    }));
+}
+
+const { hat, next } = Astro.props;
+
+// Structured data so Google understands this page is a product.
+// Add "offers" (price, currency, availability) once prices are set.
+const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: hat.name,
+    description: hat.description.join(' '),
+    image: new URL(hatImage(hat.images[0]).src, Astro.site).href,
+    sku: `THORNFELL-${hat.number}`,
+    brand: { '@type': 'Brand', name: 'Thornfell' },
+    material: materials.join(', '),
+};
+
+// Build the size list (48–64cm) from the numbers in hats.json.
+const sizeOptions = [];
+for (let cm = sizes.min; cm <= sizes.max; cm++) sizeOptions.push(`${cm}cm`);
+sizeOptions.push(sizes.customFitted);
+---
+
+<BaseLayout title={`${hat.name} – Thornfell`} description={hat.short} image={hatImage(hat.images[0])} jsonLd={jsonLd}>
+    <article class="hat">
+        <a class="text-link hat__back" href="/collection">&larr; Collection</a>
+
+        <div class="hat__layout">
+            <!-- Gallery: big image plus thumbnails. Clicking a thumbnail
+                 swaps the big image (app.js). -->
+            <div class="gallery">
+                <div class="gallery__main">
+                    <Image src={hatImage(hat.images[0])} alt={hat.name} class="gallery__image" widths={[600, 1200]} sizes="(min-width: 900px) 34rem, 92vw" loading="eager" />
+                </div>
+                {hat.images.length > 1 && (
+                    <ul class="gallery__thumbs">
+                        {hat.images.map((file, i) => {
+                            const image = hatImage(file);
+                            return (
+                                <li>
+                                    <button class="gallery__thumb" type="button" aria-label={`Show photo ${i + 1} of ${hat.name}`} aria-pressed={i === 0 ? 'true' : 'false'} data-full={image.src}>
+                                        <Image src={image} alt="" width={160} />
+                                    </button>
+                                </li>
+                            );
+                        })}
+                    </ul>
+                )}
+            </div>
+
+            <div class="hat__info">
+                <p class="eyebrow">No. {hat.number}</p>
+                <h1 class="hat__title">{hat.name}</h1>
+                <div class="divider divider--left" aria-hidden="true"><span>+</span></div>
+
+                {hat.description.map((paragraph) => <p class="hat__description">{paragraph}</p>)}
+
+                <!-- Enquiry form. Netlify picks it up at build time because of
+                     data-netlify. When Stripe arrives, this becomes the buy box. -->
+                <form class="hat-enquiry" name="hat-enquiry" method="POST" action="/thanks/" data-netlify="true" netlify-honeypot="bot-field">
+                    <input type="hidden" name="form-name" value="hat-enquiry" />
+                    <input type="hidden" name="hat" value={`${hat.name} (No. ${hat.number})`} />
+                    <p class="hidden" style="display:none">
+                        <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+                    </p>
+
+                    <div class="form-field">
+                        <label for="material">Material</label>
+                        <select id="material" name="material" required>
+                            {materials.map((m) => <option>{m}</option>)}
+                        </select>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="size">Size <a class="label-link" href="/sizing">Sizing guide</a></label>
+                        <select id="size" name="size" required>
+                            <option value="" disabled selected>Choose a size</option>
+                            {sizeOptions.map((s) => <option>{s}</option>)}
+                        </select>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="enquiry-name">Name</label>
+                        <input type="text" id="enquiry-name" name="name" autocomplete="name" required>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="enquiry-email">Email</label>
+                        <input type="email" id="enquiry-email" name="email" autocomplete="email" required>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="enquiry-message">Anything else? <span class="optional">(optional)</span></label>
+                        <textarea id="enquiry-message" name="message" rows="3"></textarea>
+                    </div>
+
+                    <button type="submit" class="button">Enquire about this hat</button>
+                    <p class="hat-enquiry__note">Made to order. Allow {site.leadTime}.</p>
+                </form>
+
+                <h2 class="hat__subheading">Details</h2>
+                <dl class="details">
+                    {Object.entries(hat.details).map(([label, value]) => (
+                        <div class="details__row">
+                            <dt>{label}</dt>
+                            <dd>{value}</dd>
+                        </div>
+                    ))}
+                </dl>
+            </div>
+        </div>
+
+        <a class="next-hat" href={`/collection/${next.slug}`}>
+            <span class="eyebrow">Next in collection</span>
+            <span class="next-hat__body">
+                <Image src={hatImage(next.images[0])} alt="" width={120} class="next-hat__image" />
+                <span>
+                    <span class="next-hat__name">{next.name}</span>
+                    <span class="next-hat__number">No. {next.number}</span>
+                </span>
+            </span>
+        </a>
+    </article>
+</BaseLayout>

@@ -1,0 +1,56 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import sizesData from "../data/hats.json";
+
+const { min, max } = sizesData.sizes;
+---
+
+<BaseLayout title="Sizing Guide – Thornfell" description="How to measure your head for a Thornfell hat.">
+    <section class="page-intro">
+        <p class="eyebrow">Fit</p>
+        <h1 class="page-title">Sizing Guide</h1>
+        <div class="divider" aria-hidden="true"><span>+</span></div>
+        <p class="light-italic-serif-text">A good hat should sit snugly without pressing. Two minutes with a tape measure is all it takes.</p>
+    </section>
+
+    <section class="prose fade-in">
+        <h2>How to measure</h2>
+        <ol class="steps">
+            <li>
+                <span class="steps__number">I</span>
+                <div>
+                    <h3>Use a soft tape</h3>
+                    <p>A soft tailor's tape measure works best. No tape? Use a piece of string, mark it, then measure it against a ruler.</p>
+                </div>
+            </li>
+            <li>
+                <span class="steps__number">II</span>
+                <div>
+                    <h3>Find the right line</h3>
+                    <p>Wrap the tape around your head where the hat will sit: across the middle of your forehead, about 1cm above your eyebrows, just above your ears and around the fullest part of the back of your head.</p>
+                </div>
+            </li>
+            <li>
+                <span class="steps__number">III</span>
+                <div>
+                    <h3>Keep it snug</h3>
+                    <p>Hold the tape firmly but not tight. It should be level all the way round. Measure two or three times to be sure.</p>
+                </div>
+            </li>
+            <li>
+                <span class="steps__number">IV</span>
+                <div>
+                    <h3>Read it in centimetres</h3>
+                    <p>Our hats are made from {min}cm to {max}cm. If you fall between two sizes, choose the larger one.</p>
+                </div>
+            </li>
+        </ol>
+
+        <h2>Custom fitted</h2>
+        <p>Every head is a slightly different shape. If you would like your hat made to fit you exactly, choose <em>Custom fitted</em> when you enquire and we will talk you through it.</p>
+
+        <div class="section-action">
+            <a class="button" href="/collection">Choose your hat</a>
+        </div>
+    </section>
+</BaseLayout>

@@ -1,18 +1,53 @@
-// Read more / Read less toggles on the collection cards.
-// JS only switches a class and updates the button; CSS handles the animation.
-document.querySelectorAll('.card__toggle').forEach((button) => {
-  button.addEventListener('click', () => {
-    const panel = button.previousElementSibling;   // the .card__more div just above the button
-    const isOpen = panel.classList.toggle('is-open');
+// ---------------------------------------------------------
+// Homepage carousel
+// The track is a horizontal scroll area (CSS scroll-snap does the snapping).
+// The buttons scroll it by one card's width.
+// ---------------------------------------------------------
+document.querySelectorAll('.carousel').forEach((carousel) => {
+  const track = carousel.querySelector('.carousel__track');
+  const prev = carousel.querySelector('.carousel__button--prev');
+  const next = carousel.querySelector('.carousel__button--next');
 
-    button.setAttribute('aria-expanded', isOpen);
-    button.textContent = isOpen ? 'Read less' : 'Read more';
+  // Width of one slide plus the gap between slides.
+  const step = () => {
+    const slide = track.querySelector('.carousel__slide');
+    const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+    return slide.getBoundingClientRect().width + gap;
+  };
+
+  prev.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: 'smooth' }));
+  next.addEventListener('click', () => track.scrollBy({ left: step(), behavior: 'smooth' }));
+
+  // Grey out a button when there's nothing more to scroll to.
+  const updateButtons = () => {
+    const max = track.scrollWidth - track.clientWidth;
+    prev.disabled = track.scrollLeft <= 1;
+    next.disabled = track.scrollLeft >= max - 1;
+  };
+  track.addEventListener('scroll', updateButtons, { passive: true });
+  window.addEventListener('resize', updateButtons);
+  updateButtons();
+});
+
+// ---------------------------------------------------------
+// Hat page gallery
+// Each thumbnail button stores its full-size image URL in data-full.
+// ---------------------------------------------------------
+const mainImage = document.querySelector('.gallery__image');
+document.querySelectorAll('.gallery__thumb').forEach((thumb) => {
+  thumb.addEventListener('click', () => {
+    mainImage.removeAttribute('srcset');   // otherwise the browser keeps showing the old srcset image
+    mainImage.src = thumb.dataset.full;
+    document.querySelectorAll('.gallery__thumb').forEach((t) => t.setAttribute('aria-pressed', 'false'));
+    thumb.setAttribute('aria-pressed', 'true');
   });
 });
 
+// ---------------------------------------------------------
 // Fade sections in as they scroll into view.
 // IntersectionObserver tells us when an element enters the viewport
 // without us having to listen to every scroll event.
+// ---------------------------------------------------------
 const observer = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {

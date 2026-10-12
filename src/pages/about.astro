@@ -1,0 +1,112 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { Image } from 'astro:assets';
+import heartTop from '../img/the-heart-of-the-west-2.jpeg';
+import wasteland from '../img/the-wasteland-outlaw-2.jpeg';
+
+// Process steps and materials live here as arrays so the markup
+// below stays short: one template, looped.
+const steps = [
+    { title: 'Blocked', text: 'Fur felt is steamed until it softens, then stretched and pulled down over a wooden block to set the crown.' },
+    { title: 'Shaped', text: 'Crown and brim are worked by hand, with creases, pinches, curls and drops, until the hat has a silhouette of its own.' },
+    { title: 'Pounced', text: 'The felt is sanded by hand to bring out its finish, from a clean sheen to a soft, nappy texture.' },
+    { title: 'Finished', text: 'Bands, details and distressing are added, and every hat gets an individually numbered, named and branded sweatband.' },
+];
+
+const materials = [
+    { name: 'Rabbit', text: 'Light and soft with a fine finish. A beautiful felt for everyday wear.' },
+    { name: '50/50', text: 'Rabbit and beaver blended together: the softness of one with the strength and weather resistance of the other.' },
+    { name: 'Beaver', text: 'The finest hat felt there is. Dense, durable and naturally water resistant, it holds its shape for a lifetime.' },
+];
+
+const numerals = ['I', 'II', 'III', 'IV'];
+---
+
+<BaseLayout title="About – Thornfell" description="Thornfell hats are individually handcrafted in Britain using traditional hat-making techniques and premium fur felts.">
+    <section class="page-intro">
+        <p class="eyebrow">About</p>
+        <h1 class="page-title">Our Story</h1>
+        <div class="divider" aria-hidden="true"><span>+</span></div>
+        <p class="pull-quote">A hat shouldn’t just be worn.<br><em>It should say something about the person wearing it.</em></p>
+    </section>
+
+    <!-- Story: photo + text side by side on desktop -->
+    <section class="split fade-in">
+        <div class="split__media">
+            <Image src={heartTop} alt="The Heart of the West, seen from above" widths={[600, 1000]} sizes="(min-width: 900px) 34rem, 92vw" />
+        </div>
+        <div class="split__text">
+            <p class="eyebrow">Handcrafted in Britain</p>
+            <h2>Made, not manufactured</h2>
+            <p>Every Thornfell hat is individually handcrafted in Britain using traditional hat-making techniques, premium fur felts and carefully selected materials.</p>
+            <p>Each piece is blocked, shaped, pounced and finished by hand, with no two hats made quite the same. Every aspect of every hat is completely custom, right down to the individually numbered, named and branded sweatband.</p>
+        </div>
+    </section>
+
+    <!-- Process: four numbered steps -->
+    <section class="band fade-in">
+        <div class="band__inner">
+            <p class="eyebrow">The Process</p>
+            <h2>Four Stages, By Hand</h2>
+            <ol class="process">
+                {steps.map((step, i) => (
+                    <li class="process__step">
+                        <span class="process__numeral" aria-hidden="true">{numerals[i]}</span>
+                        <h3>{step.title}</h3>
+                        <p>{step.text}</p>
+                    </li>
+                ))}
+            </ol>
+        </div>
+    </section>
+
+    <!-- The Iron Thorn -->
+    <section class="thorn fade-in">
+        <p class="eyebrow">The Signature</p>
+        <h2 class="thorn__title">The Iron Thorn</h2>
+        <div class="divider" aria-hidden="true"><span>+</span></div>
+        <p class="pull-quote">It's our signature.<br><em>It's what Thornfell is.</em></p>
+        <p>Look closely at a Thornfell hat and you'll find it. The Iron Thorn is the mark that says this hat was made by us, and the name it carries. More than a detail, it is the heart of every piece.</p>
+    </section>
+
+    <!-- Materials: three columns -->
+    <section class="band fade-in">
+        <div class="band__inner">
+            <p class="eyebrow">Materials</p>
+            <h2>The Felt</h2>
+            <p class="band__lead">Every hat can be made in your choice of fur felt.</p>
+            <ul class="materials">
+                {materials.map((m) => (
+                    <li class="materials__item">
+                        <h3>{m.name}</h3>
+                        <p>{m.text}</p>
+                    </li>
+                ))}
+            </ul>
+            <p class="band__lead">We also work with genuine exotic leathers, aged metals and individually made details.</p>
+        </div>
+    </section>
+
+    <!-- Character: text + photo, reversed -->
+    <section class="split split--reverse fade-in">
+        <div class="split__media">
+            <Image src={wasteland} alt="The Wasteland Outlaw" widths={[600, 1000]} sizes="(min-width: 900px) 34rem, 92vw" />
+        </div>
+        <div class="split__text">
+            <p class="eyebrow">Character</p>
+            <h2>Beautifully Imperfect</h2>
+            <p>Some Thornfell hats are clean and understated. Others are scarred, scorched, distressed and deliberately unconventional. What connects them is the same obsession with craftsmanship, character and individuality.</p>
+            <p>We take inspiration from traditional hatmaking, outlaw culture, rock &amp; roll and the beautifully imperfect things that develop character through age and use, then make them our own.</p>
+        </div>
+    </section>
+
+    <!-- Closing -->
+    <section class="closing fade-in">
+        <p>No production-line uniformity, no disposable fashion, no two hats exactly alike. Just distinctive hats, built by hand, built to last and made to be worn.</p>
+        <p class="pull-quote">Crafted without compromise.<br><em>Worn without conformity.</em></p>
+        <div class="hero__actions">
+            <a class="button" href="/collection">View the collection</a>
+            <a class="text-link" href="/contact">Commission a hat</a>
+        </div>
+    </section>
+</BaseLayout>

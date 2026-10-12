@@ -1,4 +1,16 @@
 // ---------------------------------------------------------
+// Mobile menu
+// The button flips aria-expanded; CSS shows the links when the
+// nav has .is-open.
+// ---------------------------------------------------------
+const nav = document.querySelector('.site-nav');
+const navToggle = document.querySelector('.site-nav__toggle');
+navToggle?.addEventListener('click', () => {
+  const isOpen = nav.classList.toggle('is-open');
+  navToggle.setAttribute('aria-expanded', isOpen);
+});
+
+// ---------------------------------------------------------
 // Homepage carousel
 // The track is a horizontal scroll area (CSS scroll-snap does the snapping).
 // The buttons scroll it by one card's width.

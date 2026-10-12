@@ -269,6 +269,8 @@ a {
 }
 
 .site-nav__links a {
+  display: block;
+  padding: var(--space-2) 0;   /* bigger tap area */
   font-family: var(--font-display);
   font-size: 0.7rem;
   letter-spacing: 0.25em;
@@ -292,7 +294,7 @@ a {
   background-image:
     linear-gradient(rgba(8, 8, 8, 0.7), rgba(8, 8, 8, 0.85)),
     radial-gradient(ellipse at center, transparent 10%, var(--bg) 100%),
-    url(/src/img/header-img.jpg);
+    var(--hero-image);   /* set in Header.astro */
   background-size: cover;
   background-position: center top;
   background-repeat: no-repeat;
@@ -799,10 +801,13 @@ a {
 
 .footer__links {
   display: flex;
-  gap: var(--space-6);
+  flex-wrap: wrap;
+  gap: 0 var(--space-6);
 }
 
 .footer__links a {
+  display: inline-block;
+  padding: var(--space-2) 0;   /* bigger tap area */
   font-family: var(--font-display);
   font-size: 0.7rem;
   letter-spacing: 0.25em;
@@ -822,6 +827,8 @@ a {
 }
 
 .footer__legal-links a {
+  display: inline-block;
+  padding: var(--space-2) 0;
   font-family: var(--font-display);
   font-size: 0.65rem;
   letter-spacing: 0.25em;
@@ -1235,5 +1242,88 @@ a {
 
   .contact__layout {
     grid-template-columns: 3fr 2fr;
+  }
+}
+
+/* =========================================================
+   17. Mobile menu
+   Under 700px the links hide behind a menu button.
+   ========================================================= */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.site-nav__toggle {
+  display: none;
+}
+
+@media (max-width: 699px) {
+  .site-nav {
+    flex-wrap: wrap;
+  }
+
+  .site-nav__toggle {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    padding: 0;
+    background: none;
+    border: 1px solid var(--line);
+    cursor: pointer;
+  }
+
+  /* Two thin lines drawn with a border and a pseudo-element */
+  .site-nav__bars,
+  .site-nav__bars::after {
+    display: block;
+    width: 1.1rem;
+    height: 1px;
+    background: var(--gold-light);
+    transition: transform 0.3s ease;
+  }
+
+  .site-nav__bars {
+    position: relative;
+    transform: translateY(-3px);
+  }
+
+  .site-nav__bars::after {
+    content: '';
+    position: absolute;
+    top: 6px;
+  }
+
+  /* Open state: lines cross into an X */
+  .site-nav.is-open .site-nav__bars {
+    transform: translateY(0) rotate(45deg);
+  }
+
+  .site-nav.is-open .site-nav__bars::after {
+    top: 0;
+    transform: rotate(-90deg);
+  }
+
+  .site-nav__links {
+    display: none;
+    flex-basis: 100%;
+    flex-direction: column;
+    gap: 0;
+    padding: var(--space-2) 0 var(--space-4);
+  }
+
+  .site-nav.is-open .site-nav__links {
+    display: flex;
+  }
+
+  .site-nav__links a {
+    padding: var(--space-3) 0;
+    font-size: 0.8rem;
+    border-bottom: 1px solid var(--line);
   }
 }

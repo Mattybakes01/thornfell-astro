@@ -1,7 +1,14 @@
 ---
-// Homepage hero. Only used on index.astro.
+// Homepage hero.
+// The background photo is processed by Astro (resized, converted to webp)
+// and passed to the CSS as a custom property, so the URL is always correct
+// in the built site.
+import { getImage } from 'astro:assets';
+import heroPhoto from '../img/header-img.jpg';
+
+const hero = await getImage({ src: heroPhoto, width: 1920, format: 'webp' });
 ---
-<header class="hero">
+<header class="hero" style={`--hero-image: url(${hero.src})`}>
     <p class="eyebrow">Handcrafted Headwear</p>
     <h1>THORNFELL</h1>
     <div class="divider" aria-hidden="true"><span>+</span></div>

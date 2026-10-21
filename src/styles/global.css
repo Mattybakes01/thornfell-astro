@@ -398,6 +398,41 @@ a {
   animation: logoReveal calc(var(--t) * 2s) ease 0.1s forwards;
 }
 
+/* Sheen: a band of light sweeps across the emblem, like the
+   "View the collection" button. The logo image itself is used as a
+   luminance mask, so the light only lands on the bright metal and
+   never on the dark background. Browsers without mask-mode skip it. */
+.hero__logo {
+  position: relative;
+}
+
+@supports (mask-mode: luminance) {
+  .hero__logo::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+      110deg,
+      transparent 42%,
+      rgba(255, 246, 230, 0.9) 50%,
+      transparent 58%
+    );
+    background-size: 300% 100%;
+    background-position: 120% 0;
+    mix-blend-mode: screen;
+    mask-image: var(--logo-mask);
+    mask-mode: luminance;
+    mask-size: 100% 100%;
+    animation: logoSheen 7s ease-in-out calc(var(--t) * 2.6s) infinite;
+  }
+}
+
+@keyframes logoSheen {
+  0%       { background-position: 120% 0; }
+  35%, 100% { background-position: -20% 0; }
+}
+
 .hero__logo img {
   width: 100%;
   height: auto;
@@ -1132,6 +1167,7 @@ a {
     opacity: 1;
   }
   .hero__embers,
+  .hero__logo::after,
   .button--glint::after,
   .hero__scroll-line::after {
     display: none;

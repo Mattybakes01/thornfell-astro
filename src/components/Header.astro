@@ -10,6 +10,8 @@ import heroPhoto from '../img/header-img.jpg';
 import logo from '../img/logo.jpg';
 
 const hero = await getImage({ src: heroPhoto, width: 1920, format: 'webp' });
+// Same logo, used by the CSS as a mask so the sheen only lights the metal
+const logoMask = await getImage({ src: logo, width: 800, format: 'webp' });
 
 // Embers: a handful of sparks with fixed "random" positions and timings.
 // A tiny seeded generator means the same values on every build.
@@ -33,7 +35,7 @@ const embers = Array.from({ length: 18 }, () => ({
     </div>
 
     <div class="hero__content">
-        <h1 class="hero__logo">
+        <h1 class="hero__logo" style={`--logo-mask: url(${logoMask.src})`}>
             <Image src={logo} alt="Thornfell" widths={[480, 800, 1200]} sizes="(min-width: 700px) 30rem, 80vw" loading="eager" fetchpriority="high" />
         </h1>
 

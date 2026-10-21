@@ -26,9 +26,13 @@ const embers = Array.from({ length: 18 }, () => ({
     delay: (rand() * 8).toFixed(1),
     drift: ((rand() - 0.5) * 120).toFixed(0),
 }));
+
 ---
 <header class="hero" style={`--hero-image: url(${hero.src})`}>
     <div class="hero__backdrop" aria-hidden="true"></div>
+
+    <!-- Workshop lamp: warm pool of light above the logo -->
+    <div class="hero__lamp" aria-hidden="true"></div>
 
     <div class="hero__embers" aria-hidden="true">
         {embers.map((e) => (

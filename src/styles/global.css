@@ -340,41 +340,94 @@ a {
 /* =========================================================
    5. Hero (homepage)
    ========================================================= */
+/* Timing: --t scales every delay. Full intro on first visit,
+   quick on later visits (html.intro-full is set in BaseLayout). */
 .hero {
-  min-height: calc(100svh - var(--nav-height));  /* fills the first screen under the nav */
-
-  /* Three layers, top to bottom: flat dark tint, radial vignette, photo */
-  background-image:
-    linear-gradient(rgba(8, 8, 8, 0.7), rgba(8, 8, 8, 0.85)),
-    radial-gradient(ellipse at center, transparent 10%, var(--bg) 100%),
-    var(--hero-image);   /* set in Header.astro */
-  background-size: cover;
-  background-position: center top;
-  background-repeat: no-repeat;
-
+  --t: 0.35;
+  position: relative;
+  min-height: calc(100svh - var(--nav-height));
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: var(--space-16) var(--space-6);
+  padding: var(--space-10) var(--space-6) var(--space-24);
   text-align: center;
+  overflow: hidden;
+  isolation: isolate;          /* keeps the backdrop + embers behind the content */
+}
 
+.intro-full .hero {
+  --t: 1;
+}
+
+/* Photo layer: fades in after the logo, then zooms very slowly */
+.hero__backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background-image:
+    radial-gradient(ellipse at center, rgba(8, 8, 8, 0.55) 0%, var(--bg) 75%),
+    linear-gradient(rgba(8, 8, 8, 0.6), rgba(8, 8, 8, 0.85)),
+    var(--hero-image);
+  background-size: cover;
+  background-position: center top;
   opacity: 0;
-  animation: fadeIn 1.2s ease-out 0.6s forwards;
+  animation:
+    fadeIn 2s ease calc(var(--t) * 1.4s) forwards,
+    slowZoom 30s ease-out calc(var(--t) * 1.4s) forwards;
 }
 
-.hero h1 {
-  letter-spacing: 0.15em;
+@keyframes slowZoom {
+  from { transform: scale(1.12); }
+  to   { transform: scale(1); }
+}
+
+.hero__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* The emblem. The logo file has a near-black square background, so a
+   radial mask fades its edges into the page. */
+.hero__logo {
   margin: 0;
+  width: min(27rem, 80vw, 46svh);
+  mix-blend-mode: lighten;     /* the logo's near-black background disappears into the photo */
+  opacity: 0;
+  animation: logoReveal calc(var(--t) * 2.2s) cubic-bezier(0.2, 0.7, 0.2, 1) 0.1s forwards;
 }
 
-.hero p {
-  margin-left: auto;
-  margin-right: auto;
+.hero__logo img {
+  width: 100%;
+  height: auto;
+  -webkit-mask-image: radial-gradient(circle at 50% 48%, #000 58%, transparent 71%);
+  mask-image: radial-gradient(circle at 50% 48%, #000 58%, transparent 71%);
 }
 
-.hero .light-italic-serif-text {
+/* Comes in from slightly too big and blurred, with a brief warm glow */
+@keyframes logoReveal {
+  0% {
+    opacity: 0;
+    transform: scale(1.15);
+    filter: blur(10px) brightness(1.6) drop-shadow(0 0 0 rgba(255, 170, 80, 0));
+  }
+  55% {
+    opacity: 1;
+    filter: blur(0) brightness(1.25) drop-shadow(0 0 40px rgba(255, 170, 80, 0.35));
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0) brightness(1) drop-shadow(0 0 0 rgba(255, 170, 80, 0));
+  }
+}
+
+.hero__tagline {
   max-width: 34ch;
+  margin: var(--space-2) auto 0;
+  opacity: 0;
+  animation: riseIn 1s ease calc(var(--t) * 1.8s) forwards;
 }
 
 .hero__actions {
@@ -384,6 +437,140 @@ a {
   align-items: center;
   gap: var(--space-6) var(--space-10);
   margin-top: var(--space-8);
+}
+
+/* Only the homepage hero animates its buttons in (.hero__actions is
+   reused on the about, thanks and 404 pages) */
+.hero .hero__actions {
+  opacity: 0;
+  animation: riseIn 1s ease calc(var(--t) * 2.2s) forwards;
+}
+
+@keyframes riseIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Main call to action: solid gold edge, a light sweep runs across it
+   every few seconds, and it fills on hover. */
+.button--glint {
+  position: relative;
+  overflow: hidden;
+  padding: var(--space-4) var(--space-10);
+  border-color: var(--gold-light);
+  font-size: 0.8rem;
+  box-shadow: 0 0 0 rgba(210, 193, 158, 0);
+  transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.4s ease;
+}
+
+.button--glint::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 35%, rgba(255, 240, 210, 0.35) 50%, transparent 65%);
+  transform: translateX(-100%);
+  animation: glint 4.5s ease-in-out calc(var(--t) * 3.2s) infinite;
+}
+
+.button--glint:hover,
+.button--glint:focus-visible {
+  box-shadow: 0 0 28px rgba(210, 193, 158, 0.25);
+}
+
+@keyframes glint {
+  0%, 70% { transform: translateX(-100%); }
+  100%    { transform: translateX(100%); }
+}
+
+/* Scroll cue at the bottom of the hero */
+.hero__scroll {
+  position: absolute;
+  bottom: var(--space-6);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-display);
+  font-size: 0.6rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+  opacity: 0;
+  animation: fadeIn 1s ease calc(var(--t) * 2.8s) forwards;
+}
+
+.hero__scroll-line {
+  position: relative;
+  width: 1px;
+  height: 3rem;
+  overflow: hidden;
+  background: rgba(146, 129, 105, 0.25);
+}
+
+/* A short bright segment slides down the line, over and over */
+.hero__scroll-line::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 40%;
+  background: var(--gold-light);
+  animation: scrollCue 2s ease-in-out infinite;
+}
+
+/* Short screens: no room for the cue without crowding the buttons */
+@media (max-height: 780px) {
+  .hero__scroll { display: none; }
+}
+
+@keyframes scrollCue {
+  from { transform: translateY(-100%); }
+  to   { transform: translateY(260%); }
+}
+
+/* Embers: small glowing dots that drift up and fade.
+   Position/timing per ember come from inline custom properties. */
+.hero__embers {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0;
+  animation: fadeIn 2s ease calc(var(--t) * 1s) forwards;
+}
+
+.hero__embers span {
+  position: absolute;
+  bottom: -10px;
+  left: var(--left);
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  background: #ffb35c;
+  box-shadow: 0 0 6px 2px rgba(255, 140, 50, 0.6);
+  opacity: 0;
+  animation: ember var(--duration) linear var(--delay) infinite;
+}
+
+@keyframes ember {
+  0%   { opacity: 0; transform: translate(0, 0) scale(1); }
+  10%  { opacity: 0.9; }
+  60%  { opacity: 0.5; }
+  100% { opacity: 0; transform: translate(var(--drift), -85svh) scale(0.3); }
+}
+
+/* Homepage nav: hide the small logo while the big one is on screen */
+.is-home .site-nav__brand {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+
+.is-home .site-nav.show-brand .site-nav__brand {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 /* =========================================================
@@ -947,9 +1134,19 @@ a {
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .hero {
+  .hero__backdrop,
+  .hero__logo,
+  .hero__tagline,
+  .hero .hero__actions,
+  .hero__scroll,
+  .hero__embers {
     animation: none;
     opacity: 1;
+  }
+  .hero__embers,
+  .button--glint::after,
+  .hero__scroll-line::after {
+    display: none;
   }
   .fade-in {
     opacity: 1;

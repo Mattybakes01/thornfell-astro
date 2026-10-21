@@ -26,7 +26,21 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
 	<head>
 		<meta charset="utf-8" />
 		<!-- Tells the CSS JavaScript is running (used by the divider animation) -->
-		<script is:inline>document.documentElement.classList.add('js')</script>
+		<script is:inline>
+			// 'js': JavaScript is running (used by animations).
+			// 'intro-full': first page view this session, so the homepage
+			// plays its full opening; later visits get a quick version.
+			(function () {
+				var root = document.documentElement;
+				root.classList.add('js');
+				try {
+					if (!sessionStorage.getItem('tf-seen')) {
+						root.classList.add('intro-full');
+						sessionStorage.setItem('tf-seen', '1');
+					}
+				} catch (e) {}
+			})();
+		</script>
 		<meta name="viewport" content="width=device-width" />
 		<title>{title}</title>
 		<meta name="description" content={description} />
@@ -53,7 +67,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
 		{jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
 		<script>import '../js/app.js';</script>
 	</head>
-	<body>
+	<body class={Astro.url.pathname === '/' ? 'is-home' : undefined}>
 		<Navigation />
 		<main>
 			<slot />

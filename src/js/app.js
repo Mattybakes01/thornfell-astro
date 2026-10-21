@@ -4,6 +4,17 @@
 // nav has .is-open.
 // ---------------------------------------------------------
 const nav = document.querySelector('.site-nav');
+
+// ---------------------------------------------------------
+// Homepage: the big logo is in the hero, so the small nav logo
+// stays hidden until the hero has mostly scrolled away.
+// ---------------------------------------------------------
+const hero = document.querySelector('.hero');
+if (hero && nav) {
+  new IntersectionObserver(([entry]) => {
+    nav.classList.toggle('show-brand', !entry.isIntersecting);
+  }, { threshold: 0.35 }).observe(hero);
+}
 const navToggle = document.querySelector('.site-nav__toggle');
 navToggle?.addEventListener('click', () => {
   const isOpen = nav.classList.toggle('is-open');

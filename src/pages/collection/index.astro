@@ -2,22 +2,130 @@
 import Divider from "../../components/Divider.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import HatCard from "../../components/HatCard.astro";
-import { hats } from "../../lib/hats.js";
+import { hats, categories, toSlug } from "../../lib/hats.js";
+
+// Build the filter options from the hat data, so new hats or tags
+// show up automatically. The Iron Thorn is left out of Details because
+// it's on most hats, so it wouldn't narrow anything down.
+const count = (fn) => hats.filter(fn).length;
+
+const categoryTabs = categories.map((c) => ({
+    ...c,
+    count: count((h) => toSlug(h.category) === c.slug),
+}));
+
+const finishes = [...new Set(hats.map((h) => h.finish))].map((name) => ({
+    name,
+    slug: toSlug(name),
+    count: count((h) => h.finish === name),
+}));
+
+const features = [...new Set(hats.flatMap((h) => h.features))]
+    .filter((name) => name !== 'Iron Thorn')
+    .sort()
+    .map((name) => ({ name, slug: toSlug(name), count: count((h) => h.features.includes(name)) }));
 ---
 
-<BaseLayout title="The Collection – Thornfell" description="Every Thornfell hat, each one made by hand in Britain.">
-    <section class="page-intro">
+<BaseLayout title="The Collection – Thornfell" description="Every Thornfell hat, each one made by hand in Britain. Browse Western, Outlaw and Classic styles.">
+    <section class="page-intro page-intro--compact">
         <p class="eyebrow">Thornfell</p>
         <h1 class="page-title">The Collection</h1>
         <Divider />
-        <p class="light-italic-serif-text">Every hat is made to order and no two are alike. Choose a hat for the full story.</p>
+        <p class="light-italic-serif-text">Every hat is made to order and no two are alike.</p>
     </section>
 
-    <section class="collection collection--page">
-        <ul class="hat-grid">
-            {hats.map((hat) => (
-                <li class="fade-in"><HatCard hat={hat} /></li>
+    <section class="shop" data-shop>
+        <!-- Category tabs. Each is a real link (?category=...) so it works
+             without JavaScript and can be shared; shop.js takes over clicks. -->
+        <nav class="shop__tabs" aria-label="Categories">
+            <a class="shop__tab" href="/collection/" data-category="" aria-current="page">All <span>{hats.length}</span></a>
+            {categoryTabs.map((c) => (
+                <a class="shop__tab" href={`/collection/?category=${c.slug}`} data-category={c.slug} data-blurb={c.blurb}>{c.name} <span>{c.count}</span></a>
             ))}
-        </ul>
+        </nav>
+        <p class="shop__blurb" data-blurb-default="Every hat in the collection." aria-live="polite">Every hat in the collection.</p>
+
+        <div class="shop__layout">
+            <!-- Filters: sidebar on desktop, slide-in panel on phones -->
+            <aside class="shop__filters" id="shop-filters" aria-label="Filters">
+                <div class="shop__filters-head">
+                    <h2>Filters</h2>
+                    <button class="shop__close" type="button" data-filters-close aria-label="Close filters">&times;</button>
+                </div>
+
+                <fieldset class="filter-group">
+                    <legend>Finish</legend>
+                    {finishes.map((f) => (
+                        <label class="filter-option">
+                            <input type="checkbox" name="finish" value={f.slug} />
+                            <span class="filter-option__box" aria-hidden="true"></span>
+                            <span class="filter-option__label">{f.name}</span>
+                            <span class="filter-option__count" data-count-for={`finish:${f.slug}`}>{f.count}</span>
+                        </label>
+                    ))}
+                </fieldset>
+
+                <fieldset class="filter-group">
+                    <legend>Details</legend>
+                    {features.map((f) => (
+                        <label class="filter-option">
+                            <input type="checkbox" name="details" value={f.slug} />
+                            <span class="filter-option__box" aria-hidden="true"></span>
+                            <span class="filter-option__label">{f.name}</span>
+                            <span class="filter-option__count" data-count-for={`details:${f.slug}`}>{f.count}</span>
+                        </label>
+                    ))}
+                </fieldset>
+
+                <button class="text-link shop__clear" type="button" data-clear>Clear all filters</button>
+
+                <div class="shop__filters-foot">
+                    <button class="button" type="button" data-filters-close>Show <span data-result-count>{hats.length}</span> hats</button>
+                </div>
+            </aside>
+            <div class="shop__overlay" data-filters-close></div>
+
+            <div class="shop__main">
+                <div class="shop__toolbar">
+                    <button class="shop__filters-toggle" type="button" aria-controls="shop-filters" aria-expanded="false" data-filters-open>
+                        Filters <span class="shop__filters-badge" data-active-count hidden></span>
+                    </button>
+                    <p class="shop__count" aria-live="polite">Showing <span data-result-count>{hats.length}</span> of {hats.length} hats</p>
+                    <label class="shop__sort">
+                        <span>Sort</span>
+                        <select name="sort">
+                            <option value="">Collection order</option>
+                            <option value="name">Name A–Z</option>
+                            <option value="name-desc">Name Z–A</option>
+                        </select>
+                    </label>
+                </div>
+
+                <!-- Chips for the filters that are switched on -->
+                <ul class="shop__chips" data-chips aria-label="Active filters"></ul>
+
+                <ul class="hat-grid shop__grid" data-grid>
+                    {hats.map((hat) => (
+                        <li
+                            class="shop__item"
+                            data-category={toSlug(hat.category)}
+                            data-finish={toSlug(hat.finish)}
+                            data-details={hat.features.map(toSlug).join(' ')}
+                            data-number={hat.number}
+                            data-name={hat.name.replace(/^The /, '')}
+                        >
+                            <HatCard hat={hat} showCategory />
+                        </li>
+                    ))}
+                </ul>
+
+                <div class="shop__empty" data-empty hidden>
+                    <p class="light-italic-serif-text">No hats match those filters.</p>
+                    <button class="button" type="button" data-clear>Clear filters</button>
+                </div>
+            </div>
+        </div>
     </section>
+
+    <script>import '../../js/shop.js';</script>
 </BaseLayout>

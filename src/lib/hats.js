@@ -18,3 +18,7 @@ export function hatImage(fileName) {
 export const hats = data.hats;
 export const materials = data.materials;
 export const sizes = data.sizes;
+export const categories = data.categories;
+
+// Turn "Barbed wire" into "barbed-wire" for data attributes and URLs
+export const toSlug = (text) => text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');

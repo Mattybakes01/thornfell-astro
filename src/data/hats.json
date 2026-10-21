@@ -1,11 +1,42 @@
 {
-  "materials": ["Rabbit fur felt", "50/50 rabbit and beaver", "Beaver fur felt"],
-  "sizes": { "min": 48, "max": 64, "customFitted": "Custom fitted (+£25)" },
+  "materials": [
+    "Rabbit fur felt",
+    "50/50 rabbit and beaver",
+    "Beaver fur felt"
+  ],
+  "sizes": {
+    "min": 48,
+    "max": 64,
+    "customFitted": "Custom fitted (+£25)"
+  },
+  "categories": [
+    {
+      "slug": "western",
+      "name": "Western",
+      "blurb": "Soft felts and sculpted crowns with a western line."
+    },
+    {
+      "slug": "outlaw",
+      "name": "Outlaw",
+      "blurb": "Skulls, scars and barbed wire. Built to look survived."
+    },
+    {
+      "slug": "classic",
+      "name": "Classic",
+      "blurb": "Clean, considered shapes made to be worn every day."
+    }
+  ],
   "hats": [
     {
       "slug": "the-western-rose",
       "number": "001",
       "name": "The Western Rose",
+      "category": "Western",
+      "finish": "Clean",
+      "features": [
+        "Braided leather",
+        "Iron Thorn"
+      ],
       "short": "Folded telescope crown, soft nappy felt with very slightly lifted sides on the brim and a gentle dip over the eyes.",
       "description": [
         "Soft in texture, assured in silhouette. The Western Rose features a folded telescope crown, a gently lifted brim and a subtle drop over the eyes, shaped with quiet precision. Finished with a braided leather band and the Iron Thorn, each hat bears the restrained lustre of something made slowly and deliberately by hand.",
@@ -19,13 +50,26 @@
         "Crown": "Folded telescope",
         "Hatband": "Braided leather, the Iron Thorn"
       },
-      "images": ["the-western-rose-1.jpeg", "the-western-rose-2.jpeg", "the-western-rose-3.jpeg", "the-western-rose-4.jpeg"],
+      "images": [
+        "the-western-rose-1.jpeg",
+        "the-western-rose-2.jpeg",
+        "the-western-rose-3.jpeg",
+        "the-western-rose-4.jpeg"
+      ],
       "stripePriceId": null
     },
     {
       "slug": "the-bone-collector",
       "number": "002",
       "name": "The Bone Collector",
+      "category": "Outlaw",
+      "finish": "Distressed",
+      "features": [
+        "Skull",
+        "Crocodile",
+        "Barbed wire",
+        "Iron Thorn"
+      ],
       "short": "Punisher style skull crown, crocodile bone leather band.",
       "description": [
         "The Bone Collector features a weathered, punisher style skull set within a short-brimmed gunslinger silhouette, marked by battle damage and roughly stitched scars. A genuine crocodile bone-leather band sits over hand-distressed petersham, bound at the base with rustic barbed wire and finished with the Iron Thorn.",
@@ -39,13 +83,24 @@
         "Crown": "Sculpted punisher style skull",
         "Hatband": "Crocodile bone leather over distressed petersham, barbed wire, the Iron Thorn"
       },
-      "images": ["the-bone-collector-1.jpeg", "the-bone-collector-2.jpeg", "the-bone-collector-3.jpeg", "the-bone-collector-4.jpeg"],
+      "images": [
+        "the-bone-collector-1.jpeg",
+        "the-bone-collector-2.jpeg",
+        "the-bone-collector-3.jpeg",
+        "the-bone-collector-4.jpeg"
+      ],
       "stripePriceId": null
     },
     {
       "slug": "the-heart-of-the-west",
       "number": "003",
       "name": "The Heart of the West",
+      "category": "Western",
+      "finish": "Clean",
+      "features": [
+        "Braided leather",
+        "Iron Thorn"
+      ],
       "short": "Folded, heart shaped crown, soft nappy felt. A playful, feminine hat.",
       "description": [
         "Playful and feminine. The Heart of the West features a hand sculpted heart-shaped crown, a slight lifted brim with a soft pencil curl. Finished with a braided leather band and the Iron Thorn.",
@@ -59,13 +114,25 @@
         "Crown": "Hand sculpted heart",
         "Hatband": "Braided leather, the Iron Thorn"
       },
-      "images": ["the-heart-of-the-west-1.jpeg", "the-heart-of-the-west-2.jpeg", "the-heart-of-the-west-3.jpeg", "the-heart-of-the-west-4.jpeg"],
+      "images": [
+        "the-heart-of-the-west-1.jpeg",
+        "the-heart-of-the-west-2.jpeg",
+        "the-heart-of-the-west-3.jpeg",
+        "the-heart-of-the-west-4.jpeg"
+      ],
       "stripePriceId": null
     },
     {
       "slug": "the-sentinel",
       "number": "004",
       "name": "The Sentinel",
+      "category": "Outlaw",
+      "finish": "Distressed",
+      "features": [
+        "Skull",
+        "Python",
+        "Conchos"
+      ],
       "short": "Aged, asymmetrical Gunslinger. An old cowboy outlaw's hat through and through.",
       "description": [
         "The Sentinel doesn’t look weathered for effect. It looks like it’s already lived a life.",
@@ -83,13 +150,25 @@
         "Crown": "Squashed, asymmetric",
         "Hatband": "Vintage Burmese python, distressed leather, gunmetal conchos, skull"
       },
-      "images": ["the-sentinel-1.jpeg", "the-sentinel-2.jpeg", "the-sentinel-3.jpeg", "the-sentinel-4.jpeg"],
+      "images": [
+        "the-sentinel-1.jpeg",
+        "the-sentinel-2.jpeg",
+        "the-sentinel-3.jpeg",
+        "the-sentinel-4.jpeg"
+      ],
       "stripePriceId": null
     },
     {
       "slug": "the-wasteland-outlaw",
       "number": "005",
       "name": "The Wasteland Outlaw",
+      "category": "Outlaw",
+      "finish": "Distressed",
+      "features": [
+        "Skull",
+        "Python",
+        "Barbed wire"
+      ],
       "short": "Post apocalyptic gunslinger. Worn, torn and undeniably badass.",
       "description": [
         "Sent straight from the apocalypse.",
@@ -105,13 +184,23 @@
         "Crown": "Sculpted skull",
         "Hatband": "Vintage Burmese python, weathered jute, barbed wire"
       },
-      "images": ["the-wasteland-outlaw-1.jpeg", "the-wasteland-outlaw-2.jpeg", "the-wasteland-outlaw-3.jpeg", "the-wasteland-outlaw-4.jpeg"],
+      "images": [
+        "the-wasteland-outlaw-1.jpeg",
+        "the-wasteland-outlaw-2.jpeg",
+        "the-wasteland-outlaw-3.jpeg",
+        "the-wasteland-outlaw-4.jpeg"
+      ],
       "stripePriceId": null
     },
     {
       "slug": "the-ivory-regent",
       "number": "006",
       "name": "The Ivory Regent",
+      "category": "Classic",
+      "finish": "Clean",
+      "features": [
+        "Bullet casings"
+      ],
       "short": "Soft creased, rolled brim. A classic, elegant cattleman.",
       "description": [
         "Elegant and commanding. The Ivory Regent features a classically shaped cattleman crown, standing 5 inches tall with a soft, considered crease, balanced by a gently rolled 4¼-inch brim. A seamlessly joined felt self-band maintains its clean silhouette, finished with a single .243 Winchester casing.",
@@ -125,13 +214,24 @@
         "Crown": "5\" cattleman, soft crease",
         "Hatband": "Felt self-band, single .243 Winchester casing"
       },
-      "images": ["the-ivory-regent-1.jpg", "the-ivory-regent-2.jpg", "the-ivory-regent-3.jpg"],
+      "images": [
+        "the-ivory-regent-1.jpg",
+        "the-ivory-regent-2.jpg",
+        "the-ivory-regent-3.jpg"
+      ],
       "stripePriceId": null
     },
     {
       "slug": "the-dresstern-gentleman",
       "number": "007",
       "name": "The Dresstern Gentleman",
+      "category": "Classic",
+      "finish": "Clean",
+      "features": [
+        "Python",
+        "Bullet casings",
+        "Iron Thorn"
+      ],
       "short": "Short brim, RCA style crown. A little dressy, a little western.",
       "description": [
         "Refined without losing its edge. The Dresstern Gentleman features clean lines and a restrained brim width, creating a short-brimmed silhouette equally at home dressed up or worn out in the field. Finished with a genuine vintage python hatband, three .243 Winchester bullet casings and the Iron Thorn.",
@@ -145,13 +245,24 @@
         "Crown": "RCA style",
         "Hatband": "Vintage python, three .243 Winchester casings, the Iron Thorn"
       },
-      "images": ["the-dresstern-gentleman-1.jpg", "the-dresstern-gentleman-2.jpg"],
+      "images": [
+        "the-dresstern-gentleman-1.jpg",
+        "the-dresstern-gentleman-2.jpg"
+      ],
       "stripePriceId": null
     },
     {
       "slug": "the-pallbearer",
       "number": "008",
       "name": "The Pallbearer",
+      "category": "Outlaw",
+      "finish": "Distressed",
+      "features": [
+        "Skull",
+        "Python",
+        "Barbed wire",
+        "Iron Thorn"
+      ],
       "short": "A deeply carved skull sits inside a gothic, coffin crown. A darker twist on western fashion.",
       "description": [
         "A dark twist on western form. The Pallbearer features a deeply sculpted skull set within a gothic coffin crown, creating a silhouette that reveals its most striking detail from above. Finished with a beautifully textured, vintage black python hatband, rustic barbed wire and the Iron Thorn.",
@@ -165,13 +276,22 @@
         "Crown": "Gothic coffin with sculpted skull",
         "Hatband": "Vintage black python, barbed wire, the Iron Thorn"
       },
-      "images": ["the-pallbearer-1.jpg", "the-pallbearer-2.jpg", "the-pallbearer-3.jpg"],
+      "images": [
+        "the-pallbearer-1.jpg",
+        "the-pallbearer-2.jpg",
+        "the-pallbearer-3.jpg"
+      ],
       "stripePriceId": null
     },
     {
       "slug": "the-outdoorsman",
       "number": "009",
       "name": "The Outdoorsman",
+      "category": "Classic",
+      "finish": "Clean",
+      "features": [
+        "Bullet casings"
+      ],
       "short": "A tight, flattened telescope with a wide pencil curled brim dropped front and back. Shade from the sun, shed water in a downpour.",
       "description": [
         "Purposeful and understated. The Outdoorsman features a wide, restrained pencil curled brim, with a flattened telescope crown. Dropped gently at the front and rear, the brim is shaped to shed rain and offer protection from the sun without compromising its clean silhouette. Finished with a 20mm leather hatband and a single .243 Winchester cartridge.",
@@ -185,7 +305,12 @@
         "Crown": "Flattened telescope",
         "Hatband": "20mm leather, single .243 Winchester cartridge"
       },
-      "images": ["the-outdoorsman-1.jpg", "the-outdoorsman-2.jpg", "the-outdoorsman-3.jpg", "the-outdoorsman-4.jpg"],
+      "images": [
+        "the-outdoorsman-1.jpg",
+        "the-outdoorsman-2.jpg",
+        "the-outdoorsman-3.jpg",
+        "the-outdoorsman-4.jpg"
+      ],
       "stripePriceId": null
     }
   ]

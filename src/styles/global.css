@@ -413,9 +413,11 @@ a {
   pointer-events: none;
   background: linear-gradient(
     110deg,
-    transparent 42%,
-    rgba(255, 246, 230, 0.85) 50%,
-    transparent 58%
+    transparent 38%,
+    rgba(255, 246, 230, 0.6) 46%,
+    rgba(255, 250, 240, 1) 50%,
+    rgba(255, 246, 230, 0.6) 54%,
+    transparent 62%
   );
   background-size: 300% 100%;
   background-position: 120% 0;

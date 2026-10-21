@@ -395,7 +395,7 @@ a {
   width: min(27rem, 80vw, 46svh);
   mix-blend-mode: lighten;     /* the logo's near-black background disappears into the photo */
   opacity: 0;
-  animation: logoReveal calc(var(--t) * 2.2s) cubic-bezier(0.2, 0.7, 0.2, 1) 0.1s forwards;
+  animation: logoReveal calc(var(--t) * 2s) ease 0.1s forwards;
 }
 
 .hero__logo img {
@@ -405,22 +405,10 @@ a {
   mask-image: radial-gradient(circle at 50% 48%, #000 58%, transparent 71%);
 }
 
-/* Comes in from slightly too big and blurred, then settles */
+/* A slow, plain fade in */
 @keyframes logoReveal {
-  0% {
-    opacity: 0;
-    transform: scale(1.15);
-    filter: blur(10px);
-  }
-  55% {
-    opacity: 1;
-    filter: blur(0);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-    filter: blur(0);
-  }
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
 .hero__tagline {

@@ -8,10 +8,12 @@
 import { Image, getImage } from 'astro:assets';
 import heroPhoto from '../img/header-img.jpg';
 import logo from '../img/logo.jpg';
+import logoCutout from '../img/logo-cutout.png';
 
 const hero = await getImage({ src: heroPhoto, width: 1920, format: 'webp' });
-// Same logo, used by the CSS as a mask so the sheen only lights the metal
-const logoMask = await getImage({ src: logo, width: 800, format: 'webp' });
+// Cut-out of the logo (transparent background, metal only). The CSS uses
+// it as a mask so the sheen only ever lands on the metal.
+const logoMask = await getImage({ src: logoCutout, width: 600, format: 'webp', quality: 60 });
 
 // Embers: a handful of sparks with fixed "random" positions and timings.
 // A tiny seeded generator means the same values on every build.

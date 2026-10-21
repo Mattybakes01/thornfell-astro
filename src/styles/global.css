@@ -399,33 +399,34 @@ a {
 }
 
 /* Sheen: a band of light sweeps across the emblem, like the
-   "View the collection" button. The logo image itself is used as a
-   luminance mask, so the light only lands on the bright metal and
-   never on the dark background. Browsers without mask-mode skip it. */
+   "View the collection" button. It's masked by logo-cutout.png (the
+   logo with a transparent background), so the light only appears
+   on the metal, never on the dark background. */
 .hero__logo {
   position: relative;
 }
 
-@supports (mask-mode: luminance) {
-  .hero__logo::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background: linear-gradient(
-      110deg,
-      transparent 42%,
-      rgba(255, 246, 230, 0.9) 50%,
-      transparent 58%
-    );
-    background-size: 300% 100%;
-    background-position: 120% 0;
-    mix-blend-mode: screen;
-    mask-image: var(--logo-mask);
-    mask-mode: luminance;
-    mask-size: 100% 100%;
-    animation: logoSheen 7s ease-in-out calc(var(--t) * 2.6s) infinite;
-  }
+.hero__logo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    110deg,
+    transparent 42%,
+    rgba(255, 246, 230, 0.85) 50%,
+    transparent 58%
+  );
+  background-size: 300% 100%;
+  background-position: 120% 0;
+  mix-blend-mode: screen;
+  -webkit-mask-image: var(--logo-mask);
+  mask-image: var(--logo-mask);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  animation: logoSheen 7s ease-in-out calc(var(--t) * 2.6s) infinite;
 }
 
 @keyframes logoSheen {

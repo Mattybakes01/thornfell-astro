@@ -2,7 +2,7 @@
 // One hat in a grid or carousel. The whole card links to the hat's own page.
 // showCategory adds a small category label above the name (collection page).
 import {Image} from 'astro:assets';
-import { hatImage } from '../lib/hats.js';
+import { hatImage, fromPrice, formatPrice } from '../lib/hats.js';
 
 const { hat, showCategory = false } = Astro.props;
 ---
@@ -15,5 +15,6 @@ const { hat, showCategory = false } = Astro.props;
     {showCategory && <p class="hat-card__category">{hat.category}<span aria-hidden="true"> · </span>{hat.finish}</p>}
     <h3 class="hat-card__title">{hat.name}</h3>
     <p class="hat-card__short">{hat.short}</p>
+    <p class="hat-card__price">From {formatPrice(fromPrice(hat))}</p>
     <span class="hat-card__view">View <span aria-hidden="true">&rarr;</span></span>
 </a>

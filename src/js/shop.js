@@ -93,6 +93,8 @@ if (shop) {
     const sorted = [...items].sort((a, b) => {
       if (state.sort === 'name') return a.dataset.name.localeCompare(b.dataset.name);
       if (state.sort === 'name-desc') return b.dataset.name.localeCompare(a.dataset.name);
+      if (state.sort === 'price') return a.dataset.price - b.dataset.price;
+      if (state.sort === 'price-desc') return b.dataset.price - a.dataset.price;
       return a.dataset.number.localeCompare(b.dataset.number);
     });
     sorted.forEach((item) => grid.append(item));

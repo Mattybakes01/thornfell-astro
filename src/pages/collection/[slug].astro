@@ -2,7 +2,7 @@
 import Divider from "../../components/Divider.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import {Image} from 'astro:assets';
-import { hats, hatImage, materials, sizes } from "../../lib/hats.js";
+import { hats, hatImage, materials, sizes, priceFor, fromPrice, toPrice, formatPrice } from "../../lib/hats.js";
 import site from "../../data/site.json";
 
 // Astro builds one static page per hat. getStaticPaths tells it which
@@ -17,7 +17,6 @@ export function getStaticPaths() {
 const { hat, next } = Astro.props;
 
 // Structured data so Google understands this page is a product.
-// Add "offers" (price, currency, availability) once prices are set.
 const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Product',
@@ -26,7 +25,18 @@ const jsonLd = {
     image: new URL(hatImage(hat.images[0]).src, Astro.site).href,
     sku: `THORNFELL-${hat.number}`,
     brand: { '@type': 'Brand', name: 'Thornfell' },
-    material: materials.join(', '),
+    material: materials.map((m) => m.name).join(', '),
+    // Price range across the three felts. Made to order, so availability
+    // is MadeToOrder rather than InStock.
+    offers: {
+        '@type': 'AggregateOffer',
+        priceCurrency: 'GBP',
+        lowPrice: fromPrice(hat),
+        highPrice: toPrice(hat),
+        offerCount: materials.length,
+        availability: 'https://schema.org/MadeToOrder',
+        url: new URL(`/collection/${hat.slug}/`, Astro.site).href,
+    },
 };
 
 // Build the size list (48–64cm) from the numbers in hats.json.
@@ -65,6 +75,8 @@ sizeOptions.push(sizes.customFitted);
             <div class="hat__info">
                 <p class="eyebrow">No. {hat.number}</p>
                 <h1 class="hat__title">{hat.name}</h1>
+                <!-- Updates when the material or size changes (app.js) -->
+                <p class="hat__price" data-hat-price>{formatPrice(fromPrice(hat))}</p>
                 <Divider align="left" />
 
                 {hat.description.map((paragraph) => <p class="hat__description">{paragraph}</p>)}
@@ -81,7 +93,7 @@ sizeOptions.push(sizes.customFitted);
                     <div class="form-field">
                         <label for="material">Material</label>
                         <select id="material" name="material" required>
-                            {materials.map((m) => <option>{m}</option>)}
+                            {materials.map((m) => <option value={`${m.name} (${formatPrice(priceFor(hat, m))})`} data-price={priceFor(hat, m)}>{m.name} – {formatPrice(priceFor(hat, m))}</option>)}
                         </select>
                     </div>
 
@@ -109,7 +121,7 @@ sizeOptions.push(sizes.customFitted);
                     </div>
 
                     <button type="submit" class="button">Enquire about this hat</button>
-                    <p class="hat-enquiry__note">Made to order. Allow {site.leadTime}.</p>
+                    <p class="hat-enquiry__note">Made to order. Allow {site.leadTime}. Prices are starting prices; Tom will confirm the final price with you.</p>
                 </form>
 
                 <h2 class="hat__subheading">Details</h2>

@@ -888,6 +888,14 @@ a {
   margin: 0;
 }
 
+.hat-card__price {
+  margin: var(--space-2) 0 0;
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  color: var(--gold-light);
+}
+
 .hat-card__view {
   margin-top: auto;
   padding-top: var(--space-2);
@@ -989,6 +997,14 @@ a {
 
 .hat__title {
   font-size: clamp(2rem, 6vw, 3rem);
+}
+
+.hat__price {
+  margin: 0.25rem 0 0;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  letter-spacing: 0.08em;
+  color: var(--gold-light);
 }
 
 .hat__description {

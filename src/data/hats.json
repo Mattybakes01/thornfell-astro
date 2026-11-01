@@ -1,8 +1,17 @@
 {
   "materials": [
-    "Rabbit fur felt",
-    "50/50 rabbit and beaver",
-    "Beaver fur felt"
+    {
+      "name": "Rabbit fur felt",
+      "price": 397
+    },
+    {
+      "name": "50/50 rabbit and beaver",
+      "price": 525
+    },
+    {
+      "name": "Beaver fur felt",
+      "price": 655
+    }
   ],
   "sizes": {
     "min": 48,
@@ -62,6 +71,7 @@
         "The Western Rose from above, showing the folded telescope crown",
         "The Western Rose side profile with its braided leather hatband"
       ],
+      "addOn": 15,
       "stripePriceId": null
     },
     {
@@ -101,6 +111,7 @@
         "The Bone Collector from above, showing the weathered skull crown",
         "The Bone Collector side profile, short battle-damaged brim"
       ],
+      "addOn": 215,
       "stripePriceId": null
     },
     {
@@ -138,6 +149,7 @@
         "The Heart of the West from the front, with its softly curled brim",
         "The Heart of the West side profile"
       ],
+      "addOn": 50,
       "stripePriceId": null
     },
     {
@@ -180,6 +192,7 @@
         "The Sentinel from the side, with its pencil-curled brim",
         "The Sentinel side profile, brim pulled down at the front"
       ],
+      "addOn": 75,
       "stripePriceId": null
     },
     {
@@ -220,6 +233,7 @@
         "The Wasteland Outlaw from the front, battered asymmetric crown",
         "The Wasteland Outlaw side profile, scarred and distressed felt"
       ],
+      "addOn": 215,
       "stripePriceId": null
     },
     {
@@ -254,6 +268,7 @@
         "The Ivory Regent from the side, showing the gently rolled brim",
         "The Ivory Regent from the front, with its tall cattleman crown"
       ],
+      "addOn": 25,
       "stripePriceId": null
     },
     {
@@ -288,6 +303,7 @@
         "The Dresstern Gentleman: black short-brimmed felt hat with a vintage python band and bullet casings",
         "The Dresstern Gentleman side profile"
       ],
+      "addOn": 40,
       "stripePriceId": null
     },
     {
@@ -325,6 +341,7 @@
         "The Pallbearer from the side, with its black python hatband and barbed wire",
         "The Pallbearer side profile, distressed black felt"
       ],
+      "addOn": 185,
       "stripePriceId": null
     },
     {
@@ -361,6 +378,7 @@
         "The Outdoorsman from the front, brim dropped front and back",
         "The Outdoorsman side profile"
       ],
+      "addOn": 25,
       "stripePriceId": null
     }
   ]

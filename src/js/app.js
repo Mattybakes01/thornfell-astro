@@ -111,3 +111,23 @@ if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
     });
   });
 }
+
+// ---------------------------------------------------------
+// Hat page price
+// The price line under the title follows the chosen material,
+// plus £25 if the hat is custom fitted.
+// ---------------------------------------------------------
+const priceLine = document.querySelector('[data-hat-price]');
+const materialSelect = document.getElementById('material');
+const sizeSelect = document.getElementById('size');
+
+if (priceLine && materialSelect) {
+  const customFitExtra = 25;
+  const updatePrice = () => {
+    let price = Number(materialSelect.selectedOptions[0].dataset.price);
+    if (sizeSelect?.value.startsWith('Custom fitted')) price += customFitExtra;
+    priceLine.textContent = `£${price.toLocaleString('en-GB')}`;
+  };
+  materialSelect.addEventListener('change', updatePrice);
+  sizeSelect?.addEventListener('change', updatePrice);
+}

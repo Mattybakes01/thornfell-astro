@@ -61,6 +61,7 @@ document.querySelectorAll('.gallery__thumb').forEach((thumb) => {
   thumb.addEventListener('click', () => {
     mainImage.removeAttribute('srcset');   // otherwise the browser keeps showing the old srcset image
     mainImage.src = thumb.dataset.full;
+    mainImage.alt = thumb.dataset.alt;   // describe the photo that's now showing
     document.querySelectorAll('.gallery__thumb').forEach((t) => t.setAttribute('aria-pressed', 'false'));
     thumb.setAttribute('aria-pressed', 'true');
   });

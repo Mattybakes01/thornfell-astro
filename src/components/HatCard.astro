@@ -9,7 +9,7 @@ const { hat, showCategory = false } = Astro.props;
 
 <a class="hat-card" href={`/collection/${hat.slug}`}>
     <div class="hat-card__frame">
-        <Image src={hatImage(hat.images[0])} alt={hat.name} class="hat-card__image" style={`view-transition-name: hat-${hat.slug}`} widths={[400, 800]} sizes="(min-width: 720px) 20rem, 90vw" />
+        <Image src={hatImage(hat.images[0])} alt={hat.alts?.[0] ?? hat.name} class="hat-card__image" style={`view-transition-name: hat-${hat.slug}`} widths={[400, 800]} sizes="(min-width: 720px) 20rem, 90vw" />
         <span class="hat-card__number">No. {hat.number}</span>
     </div>
     {showCategory && <p class="hat-card__category">{hat.category}<span aria-hidden="true"> · </span>{hat.finish}</p>}

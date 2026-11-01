@@ -56,6 +56,12 @@
         "the-western-rose-3.jpeg",
         "the-western-rose-4.jpeg"
       ],
+      "alts": [
+        "The Western Rose: pale handmade felt hat with a folded telescope crown and braided leather band, resting on a log",
+        "The Western Rose from the side, showing the gently lifted brim and dip over the eyes",
+        "The Western Rose from above, showing the folded telescope crown",
+        "The Western Rose side profile with its braided leather hatband"
+      ],
       "stripePriceId": null
     },
     {
@@ -89,6 +95,12 @@
         "the-bone-collector-3.jpeg",
         "the-bone-collector-4.jpeg"
       ],
+      "alts": [
+        "The Bone Collector: distressed brown felt hat with a punisher-style skull carved into the crown",
+        "The Bone Collector from the side, with its black crocodile bone-leather band and barbed wire",
+        "The Bone Collector from above, showing the weathered skull crown",
+        "The Bone Collector side profile, short battle-damaged brim"
+      ],
       "stripePriceId": null
     },
     {
@@ -119,6 +131,12 @@
         "the-heart-of-the-west-2.jpeg",
         "the-heart-of-the-west-3.jpeg",
         "the-heart-of-the-west-4.jpeg"
+      ],
+      "alts": [
+        "The Heart of the West: sage felt hat with a hand-sculpted heart-shaped crown and braided leather band",
+        "The Heart of the West from above, showing the heart-shaped crown",
+        "The Heart of the West from the front, with its softly curled brim",
+        "The Heart of the West side profile"
       ],
       "stripePriceId": null
     },
@@ -156,6 +174,12 @@
         "the-sentinel-3.jpeg",
         "the-sentinel-4.jpeg"
       ],
+      "alts": [
+        "The Sentinel: aged taupe felt hat with a squashed asymmetric crown and python hatband",
+        "The Sentinel from the front, showing the skull and gunmetal conchos on the python band",
+        "The Sentinel from the side, with its pencil-curled brim",
+        "The Sentinel side profile, brim pulled down at the front"
+      ],
       "stripePriceId": null
     },
     {
@@ -190,6 +214,12 @@
         "the-wasteland-outlaw-3.jpeg",
         "the-wasteland-outlaw-4.jpeg"
       ],
+      "alts": [
+        "The Wasteland Outlaw: weathered dark brown felt hat with a skull sculpted into the crown",
+        "The Wasteland Outlaw from the side, with its vintage python and barbed wire band",
+        "The Wasteland Outlaw from the front, battered asymmetric crown",
+        "The Wasteland Outlaw side profile, scarred and distressed felt"
+      ],
       "stripePriceId": null
     },
     {
@@ -218,6 +248,11 @@
         "the-ivory-regent-1.jpg",
         "the-ivory-regent-2.jpg",
         "the-ivory-regent-3.jpg"
+      ],
+      "alts": [
+        "The Ivory Regent: ivory felt cattleman hat with a soft crease and rolled brim",
+        "The Ivory Regent from the side, showing the gently rolled brim",
+        "The Ivory Regent from the front, with its tall cattleman crown"
       ],
       "stripePriceId": null
     },
@@ -248,6 +283,10 @@
       "images": [
         "the-dresstern-gentleman-1.jpg",
         "the-dresstern-gentleman-2.jpg"
+      ],
+      "alts": [
+        "The Dresstern Gentleman: black short-brimmed felt hat with a vintage python band and bullet casings",
+        "The Dresstern Gentleman side profile"
       ],
       "stripePriceId": null
     },
@@ -281,6 +320,11 @@
         "the-pallbearer-2.jpg",
         "the-pallbearer-3.jpg"
       ],
+      "alts": [
+        "The Pallbearer from above: black felt hat with a skull carved into a gothic coffin-shaped crown",
+        "The Pallbearer from the side, with its black python hatband and barbed wire",
+        "The Pallbearer side profile, distressed black felt"
+      ],
       "stripePriceId": null
     },
     {
@@ -310,6 +354,12 @@
         "the-outdoorsman-2.jpg",
         "the-outdoorsman-3.jpg",
         "the-outdoorsman-4.jpg"
+      ],
+      "alts": [
+        "The Outdoorsman: brown felt hat with a flattened telescope crown, wide brim and leather band",
+        "The Outdoorsman at a three-quarter angle, showing the pencil-curled brim",
+        "The Outdoorsman from the front, brim dropped front and back",
+        "The Outdoorsman side profile"
       ],
       "stripePriceId": null
     }

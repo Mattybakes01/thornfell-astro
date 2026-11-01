@@ -44,7 +44,7 @@ sizeOptions.push(sizes.customFitted);
                  swaps the big image (app.js). -->
             <div class="gallery">
                 <div class="gallery__main">
-                    <Image src={hatImage(hat.images[0])} alt={hat.name} class="gallery__image" style={`view-transition-name: hat-${hat.slug}`} widths={[600, 1200]} sizes="(min-width: 900px) 34rem, 92vw" loading="eager" />
+                    <Image src={hatImage(hat.images[0])} alt={hat.alts?.[0] ?? hat.name} class="gallery__image" style={`view-transition-name: hat-${hat.slug}`} widths={[600, 1200]} sizes="(min-width: 900px) 34rem, 92vw" loading="eager" />
                 </div>
                 {hat.images.length > 1 && (
                     <ul class="gallery__thumbs">
@@ -52,7 +52,7 @@ sizeOptions.push(sizes.customFitted);
                             const image = hatImage(file);
                             return (
                                 <li>
-                                    <button class="gallery__thumb" type="button" aria-label={`Show photo ${i + 1} of ${hat.name}`} aria-pressed={i === 0 ? 'true' : 'false'} data-full={image.src}>
+                                    <button class="gallery__thumb" type="button" aria-label={`Show photo ${i + 1} of ${hat.name}`} aria-pressed={i === 0 ? 'true' : 'false'} data-full={image.src} data-alt={hat.alts?.[i] ?? hat.name}>
                                         <Image src={image} alt="" width={160} />
                                     </button>
                                 </li>

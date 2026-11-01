@@ -6,14 +6,28 @@ import HatCard from "../components/HatCard.astro";
 import { hats } from "../lib/hats.js";
 import site from "../data/site.json";
 
+// Two linked records: the business (Organization) and the site itself
+// (WebSite), which helps Google show "Thornfell" as the site name.
 const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'Organization',
-    name: 'Thornfell',
-    url: 'https://thornfell.co.uk',
-    description: 'Handcrafted hats, made one at a time in Britain.',
-    email: site.email,
-    sameAs: [site.instagram],   // tells Google this Instagram account is ours
+    '@graph': [
+        {
+            '@type': 'Organization',
+            '@id': 'https://thornfell.co.uk/#org',
+            name: 'Thornfell',
+            url: 'https://thornfell.co.uk',
+            description: 'UK hat maker crafting cowboy, western and outlaw hats by hand from fur felt.',
+            email: site.email,
+            sameAs: [site.instagram],   // tells Google this Instagram account is ours
+        },
+        {
+            '@type': 'WebSite',
+            '@id': 'https://thornfell.co.uk/#website',
+            name: 'Thornfell',
+            url: 'https://thornfell.co.uk',
+            publisher: { '@id': 'https://thornfell.co.uk/#org' },
+        },
+    ],
 };
 ---
 
